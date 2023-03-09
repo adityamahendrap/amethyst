@@ -3,76 +3,159 @@ import { onMounted, ref } from "vue";
 import axios from "axios";
 import Navbar from "../components/Navbar.vue";
 import Footer from "../components/Footer.vue";
-import { useRoute } from 'vue-router';
+import { useRoute } from "vue-router";
 
-const route = useRoute()
-const datas = ref()
-const allTag = ref([])
-const search = ref('')
+const route = useRoute();
+const datas = ref();
+const allTag = ref([]);
+const search = ref("");
+const sortStatus = ref('time-newestToOldest')
 
 const checkTitle = (t) => {
-  const title = t.toLowerCase()
-  return title.includes(search.value.toLowerCase())
-}
+  const title = t.toLowerCase();
+  return title.includes(search.value.toLowerCase());
+};
+
+const convertTime = (unix) => new Date(unix).toLocaleDateString("en-US");
 
 const getAllData = async () => {
   const endpoint = `http://localhost:3000/articles`;
   const result = await axios.get(endpoint);
   if (result.status == 200) {
-    datas.value = result.data
-    // console.log(result.data);
-    
-    result.data.forEach(data => {
-      allTag.value.push(data.tag)
-      allTag.value = allTag.value.filter((value, index, array) => array.indexOf(value) == index);
-    });
-    // console.log(allTag.value);
+    datas.value = result.data;
+
+    getAndFilterTag(result.data)
   }
 };
 
+const getAndFilterTag = (resultData) => {
+  resultData.forEach((data) => {
+    allTag.value.push(data.tag);
+    allTag.value = allTag.value.filter(
+      (value, index, array) => array.indexOf(value) == index
+    );
+  });
+}
+
+const sortDataByNameAZ = () => {
+  datas.value.sort((a, b) => {
+      let A = a.title.toUpperCase(); // ignore upper and lowercase
+      let B = b.title.toUpperCase(); // ignore upper and lowercase
+      if (A < B) {
+        return -1;
+      }
+      if (A > B) {
+        return 1;
+      }
+      // names must be equal
+      return 0;
+    });
+    console.log(datas.value);
+}
+
+const sortDataByNameZA = () => {
+  datas.value.sort((a, b) => {
+      let A = a.title.toUpperCase(); // ignore upper and lowercase
+      let B = b.title.toUpperCase(); // ignore upper and lowercase
+      if (A > B) {
+        return -1;
+      }
+      if (A < B) {
+        return 1;
+      }
+      // names must be equal
+      return 0;
+    });
+    console.log(datas.value);
+}
+
+const sortDataByDateNewToOld = () => {
+  datas.value.sort((a, b) => {
+    return a.date.createdAt - b.date.createdAt;
+  });
+}
+
+const sortDataByDateOldToNew = () => {
+  datas.value.sort((a, b) => {
+    return b.date.createdAt - a.date.createdAt;
+  });
+}
+
 onMounted(() => {
-  getAllData()
-}) 
+  getAllData();
+});
 </script>
 
 <template>
   <Navbar />
+  {{ sortStatus }}
   <section>
-    <input class="search" type="text" placeholder="Search article" v-model="search">
-    <router-link active-class="tagActive" class="tag" to="/articles/all">All</router-link>
-    <router-link active-class="tagActive" class="tag" v-for="(tag, index) in allTag" :key="index" :to="`/articles/${tag}`">#{{ tag }}</router-link>
+    <div class="sort">
+      <button @click.prevent="sortStatus = 'title-AZ', sortDataByNameAZ()">sort by title AZ</button>
+      <button @click.prevent="sortStatus = 'title-ZA', sortDataByNameZA()">sort by title ZA</button>
+      <button @click.prevent="sortStatus = 'date-newToOld', sortDataByDateNewToOld()">sort by date new to old</button>
+      <button @click.prevent="sortStatus = 'date-oldToNew', sortDataByDateOldToNew()">sort by date old to new</button>
+    </div>
+    <input
+      class="search"
+      type="text"
+      placeholder="Search article"
+      v-model="search"
+    />
+    <router-link active-class="tagActive" class="tag" to="/articles/all"
+      >All</router-link
+    >
+    <router-link
+      active-class="tagActive"
+      class="tag"
+      v-for="(tag, index) in allTag"
+      :key="index"
+      :to="`/articles/${tag}`"
+      >#{{ tag }}</router-link
+    >
 
     <h1>Some Article</h1>
 
     <div class="container" v-if="route.params.tag == 'all'">
       <div v-for="data in datas" :key="data.id">
         <div class="card" v-if="checkTitle(data.title)">
-          <h3>{{data.title}}</h3>
-          <p class="date">{{data.date.createdAt}}</p>
-          <span>#{{data.tag.toUpperCase()}}</span>
-          <p class="desc">{{data.description}}</p>
-          <router-link class="btn" :to="`/article/${data.id}`">Read Article</router-link>
+          <h3>{{ data.title }}</h3>
+          <p class="date">{{ convertTime(data.date.createdAt) }}</p>
+          <span>#{{ data.tag.toUpperCase() }}</span>
+          <p class="desc">{{ data.description }}</p>
+          <router-link class="btn" :to="`/article/${data.id}`"
+            >Read Article</router-link
+          >
         </div>
       </div>
     </div>
     <!--  -->
     <div class="container" v-if="route.params.tag != 'all'">
       <div v-for="data in datas" :key="data.id">
-        <div class="card" v-if="data.tag == `${route.params.tag}` && checkTitle(data.title)">
-          <h3>{{data.title}}</h3>
-          <p class="date">{{data.date.createdAt}}</p>
-          <span>#{{data.tag.toUpperCase()}}</span>
-          <p class="desc">{{data.description}}</p>
-          <router-link class="btn" :to="`/article/${data.id}`">Read Article</router-link>
+        <div
+          class="card"
+          v-if="data.tag == `${route.params.tag}` && checkTitle(data.title)"
+        >
+          <h3>{{ data.title }}</h3>
+          <p class="date">{{ convertTime(data.date.createdAt) }}</p>
+          <span>#{{ data.tag.toUpperCase() }}</span>
+          <p class="desc">{{ data.description }}</p>
+          <router-link class="btn" :to="`/article/${data.id}`"
+            >Read Article</router-link
+          >
         </div>
       </div>
     </div>
   </section>
-  <Footer/>
+  <Footer />
 </template>
 
 <style scoped>
-
+.sort {
+  display: flex;
+  flex-direction: column;
+  width: 15rem;
+}
 .search {
   margin: 1rem;
   padding: 0.3rem 1rem;
@@ -93,7 +176,6 @@ onMounted(() => {
   color: white;
   background-color: black;
 }
-
 
 h1 {
   margin: 3rem;
@@ -138,7 +220,7 @@ h1 {
   color: rgb(193, 131, 250);
 }
 
- .btn:hover {
+.btn:hover {
   opacity: 0.9;
 }
 </style>

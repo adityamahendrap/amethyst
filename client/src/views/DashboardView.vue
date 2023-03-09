@@ -14,7 +14,7 @@ const getAllData = async () => {
   if (result.status == 200) {
     // console.log(result.data);
     datas.value = result.data;
-    // console.log(datas.value);
+    // console.log(datas.value[0].date.lastUpdated);
   }
 };
 
@@ -30,6 +30,8 @@ const getParagraphs = (id) => {
   paragraphs.value = paragraphs.value[0].paragraph
   // console.log(paragraphs.value)
 };
+
+const convertTime = (unix) => new Date(unix).toLocaleDateString("en-US")
 
 onMounted(() => {
   let admin = localStorage.getItem("admin-info");
@@ -53,6 +55,8 @@ onMounted(() => {
         <th scope="col">Title</th>
         <th scope="col">Description</th>
         <th scope="col">Paragraph</th>
+        <th scope="col">created</th>
+        <th scope="col">last updated</th>
         <th scope="col">Edit</th>
         <th scope="col">Delete</th>
       </tr>
@@ -63,6 +67,8 @@ onMounted(() => {
         <td>{{ data.title }}</td>
         <td>#{{ data.tag }}</td>
         <td>{{ data.description }}</td>
+        <td>{{ convertTime(data.date.createdAt) }}</td>
+        <td>{{ data.date.lastUpdated == null ? '-' :  convertTime(data.date.lastUpdated)}}</td>
         <td>
           <button
             type="button"

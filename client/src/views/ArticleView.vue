@@ -19,6 +19,8 @@ const getArticle = async () => {
   }
 };
 
+const convertTime = (unix) => new Date(unix).toLocaleDateString("en-US");
+
 onMounted(() => {
   getArticle();
 });
@@ -27,7 +29,7 @@ onMounted(() => {
 <template>
   <main v-for="e in data" :key="e.id">
     <h5 class="dir">AMETHYST / article / {{ e.title }}</h5>
-    <div class="date">{{ e.date.createdAt }}</div>
+    <div class="date">{{ convertTime(e.date.createdAt) }}</div>
     <h1>{{ e.title }}</h1>
     <h6>{{e.tag}}</h6>
     <div class="author">Aditya Mahendra</div>

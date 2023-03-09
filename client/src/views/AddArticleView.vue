@@ -15,8 +15,8 @@ const addData = async () => {
     title: title.value,
     tag: tag.value,
     date: {
-      createdAt: "21-21-2022",
-      lastUpadted: null,
+      createdAt: Date.now(),
+      lastUpdated: null,
     },
     description: description.value,
     paragraph: [

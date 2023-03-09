@@ -34,7 +34,7 @@ const updateData = async () => {
       tag: tag.value,
       date: {
         createdAt: data.value.date.createdAt,
-        lastUpadted: null,
+        lastUpdated: Date.now(),
       },
       description: description.value,
       paragraph: [
