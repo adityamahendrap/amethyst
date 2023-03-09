@@ -1,0 +1,111 @@
+{
+  "admin": [
+    {
+      "username": "winkwinkwinkz",
+      "password": 1151,
+      "id": 1
+    }
+  ],
+  "articles": [
+    {
+      "title": "GGGGGGG",
+      "tag": "tech",
+      "date": {
+        "createdAt": "11-11-2022",
+        "lastUpadted": null
+      },
+      "description": "this is decription",
+      "paragraph": [
+        {
+          "content": "first paragraph",
+          "id": 1
+        },
+        {
+          "content": "second paragraph",
+          "id": 2
+        }
+      ],
+      "id": 1
+    },
+    {
+      "title": "ya ma",
+      "tag": "tech",
+      "date": {
+        "createdAt": "21-21-2022",
+        "lastUpadted": null
+      },
+      "description": "dlnada",
+      "paragraph": [
+        {
+          "content": "Lorem officiis praesentium quisquam quaerat porro debitis deleniti, velaliquam vero velit quo placeat fuga suscipit animi! Aliquid!",
+          "id": 1
+        }
+      ],
+      "id": 2
+    },
+    {
+      "title": "111111111111111",
+      "tag": "tech",
+      "date": {
+        "createdAt": "21-21-2022",
+        "lastUpadted": null
+      },
+      "description": "dlnada",
+      "paragraph": [
+        {
+          "content": "Lorem",
+          "id": 1
+        }
+      ],
+      "id": 3
+    },
+    {
+      "title": "aditya mahendra",
+      "tag": "crime",
+      "date": {
+        "createdAt": "21-21-2022",
+        "lastUpadted": null
+      },
+      "description": "asd",
+      "paragraph": [
+        {
+          "content": "aa",
+          "id": 1
+        }
+      ],
+      "id": 4
+    },
+    {
+      "title": "pppppp",
+      "tag": "crime",
+      "date": {
+        "createdAt": "21-21-2022",
+        "lastUpadted": null
+      },
+      "description": "asd",
+      "paragraph": [
+        {
+          "content": "vffff",
+          "id": 1
+        }
+      ],
+      "id": 5
+    },
+    {
+      "title": "oooooooooo",
+      "tag": "school",
+      "date": {
+        "createdAt": "21-21-2022",
+        "lastUpadted": null
+      },
+      "description": "",
+      "paragraph": [
+        {
+          "content": "",
+          "id": 1
+        }
+      ],
+      "id": 6
+    }
+  ]
+}
