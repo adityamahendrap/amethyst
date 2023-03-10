@@ -69,11 +69,11 @@ const userController = {
 
 // {
 //   "id": 1,
-//   "title": "Can",
-//   "tag": "lorem",
-//   "description": "waste problem.",
-//   "paragraph": "While to recycle used clothing at scale.",
-//   "createdAt": 0,
+//   "title": "",
+//   "tag": "",
+//   "description": "",
+//   "paragraph": "",
+//   "createdAt": 1,
 //   "lastUpdated": null
 //  }
 

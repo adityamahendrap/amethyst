@@ -11,11 +11,12 @@ const paragraphs = ref();
 
 const getArticle = async () => {
   const result = await axios.get(
-    `http://localhost:3000/articles?id=${route.params.id}`
+    `http://localhost:5000/articles/${route.params.id}`
   );
   if (result.status == 200) {
-    data.value = result.data;
-    paragraphs.value = result.data[0].paragraph;
+    data.value = result.data.payload.datas;
+    paragraphs.value = result.data.payload.datas[0].paragraph;
+    console.log(paragraphs.value);
   }
 };
 
@@ -29,7 +30,7 @@ onMounted(() => {
 <template>
   <main v-for="e in data" :key="e.id">
     <h5 class="dir"><router-link class="link" to="/articles/all">Article</router-link> / {{ e.title.toUpperCase() }}</h5>
-    <div class="date">{{ convertTime(e.date.createdAt) }}</div>
+    <div class="date">{{ convertTime(e.createdAt) }}</div>
     <h1>{{ e.title }}</h1>
     <div class="tag-list">
       <h6 class="tag">#{{e.tag.toUpperCase()}}</h6>
@@ -37,14 +38,10 @@ onMounted(() => {
     <div class="author">Aditya Mahendra</div>
     <div class="hero"></div>
     <section>
-      <h2>
-        {{ e.description }}
-      </h2>
+      <h2>{{ e.description }}</h2>
       <br />
       <!-- {{ paragraphs }} -->
-      <p v-for="paragraph in paragraphs" :key="paragraph.id">
-        {{ paragraph.content }}
-      </p>
+      <p>{{ paragraphs }}</p>
       <!-- <hr class="second-line" /> -->
     </section>
   </main>

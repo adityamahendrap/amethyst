@@ -19,13 +19,23 @@ const checkTitle = (t) => {
 
 const convertTime = (unix) => new Date(unix).toLocaleDateString("en-US");
 
-const getAllData = async () => {
-  const endpoint = `http://localhost:3000/articles`;
-  const result = await axios.get(endpoint);
-  if (result.status == 200) {
-    datas.value = result.data;
+// const getAllData = async () => {
+//   const endpoint = `http://localhost:3000/articles`;
+//   const result = await axios.get(endpoint);
+//   if (result.status == 200) {
+//     datas.value = result.data;
 
-    getAndFilterTag(result.data)
+//     getAndFilterTag(result.data)
+//   }
+// };
+
+const getAllData = async () => {
+  const result = await axios.get(`http://localhost:5000/articles`);
+  if (result.status == 200) {
+    datas.value = result.data.payload.datas;
+    sortDataByNameAZ()
+
+    getAndFilterTag(result.data.payload.datas)
   }
 };
 
@@ -72,13 +82,13 @@ const sortDataByNameZA = () => {
 
 const sortDataByDateNewToOld = () => {
   datas.value.sort((a, b) => {
-    return a.date.createdAt - b.date.createdAt;
+    return a.createdAt - b.createdAt;
   });
 }
 
 const sortDataByDateOldToNew = () => {
   datas.value.sort((a, b) => {
-    return b.date.createdAt - a.date.createdAt;
+    return b.createdAt - a.createdAt;
   });
 }
 
@@ -117,7 +127,7 @@ onMounted(() => {
         <div class="card" v-if="checkTitle(data.title)">
           <span>#{{ data.tag.toUpperCase() }}</span>
           <h3>{{ data.title.toUpperCase() }}</h3>
-          <p class="date">{{ convertTime(data.date.createdAt) }}</p>
+          <p class="date">{{ convertTime(data.createdAt) }}</p>
           <p class="desc">{{ data.description }}</p>
           <router-link class="btn" :to="`/article/${data.id}`"
             >Read Article</router-link
@@ -133,7 +143,7 @@ onMounted(() => {
         <div class="card" v-if="data.tag == `${route.params.tag}` && checkTitle(data.title)">
           <span>#{{ data.tag.toUpperCase() }}</span>
           <h3>{{ data.title.toUpperCase() }}</h3>
-          <p class="date">{{ convertTime(data.date.createdAt) }}</p>
+          <p class="date">{{ convertTime(data.createdAt) }}</p>
           <p class="desc">{{ data.description }}</p>
           <router-link class="btn" :to="`/article/${data.id}`">Read Article</router-link>
         </div>

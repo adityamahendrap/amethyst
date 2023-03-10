@@ -1,9 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
-const mysql = require("mysql");
 const response = require("./response.js");
-const db = require("./model/connection.js");
 const articlesController = require("./controller/articlesController.js");
 const adminContoller = require("./controller/adminContoller.js");
 const app = express();
@@ -13,12 +11,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get("/", (req, resp) => {
-  response(
-    200,
-    { routeList: ["/admin", "/articles"] },
-    "API for AMETHYST blog/aricle management",
-    resp
-  );
+  response(200, { routeList: ["/admin", "/articles", "/articles/:id"] }, "API for AMETHYST blog/aricle management", resp);
 });
 
 app.route("/admin")
@@ -33,6 +26,6 @@ app.route("/articles/:id")
   .put(articlesController.updateData)
   .delete(articlesController.deleteData)
 
-app.listen(5555, () => {
-  console.log("server running on port 5555");
+app.listen(5000, () => {
+  console.log(`server running on port 5000`);
 });
