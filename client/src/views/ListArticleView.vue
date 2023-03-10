@@ -89,7 +89,7 @@ onMounted(() => {
 
 <template>
   <Navbar />
-  {{ sortStatus }}
+  <!-- {{ sortStatus }} -->
   <section>
     <input class="search" type="text" placeholder="Search article" v-model="search"/>
     <div class="sort">
@@ -110,13 +110,13 @@ onMounted(() => {
       >
     </div>
 
-    <h1>Some Article</h1>
+    <h1>{{ search == '' ? 'Some Article' : `Article with "${search}"`  }}</h1>
 
     <div class="container" v-if="route.params.tag == 'all'">
       <template v-for="data in datas" :key="data.id">
         <div class="card" v-if="checkTitle(data.title)">
           <span>#{{ data.tag.toUpperCase() }}</span>
-          <h3>{{ data.title }}</h3>
+          <h3>{{ data.title.toUpperCase() }}</h3>
           <p class="date">{{ convertTime(data.date.createdAt) }}</p>
           <p class="desc">{{ data.description }}</p>
           <router-link class="btn" :to="`/article/${data.id}`"
@@ -126,13 +126,13 @@ onMounted(() => {
       </template>
     </div>
 
-    <h1>Not Found</h1>
+    <!-- <h1>Not Found</h1> -->
     <!--  -->
     <div class="container" v-if="route.params.tag != 'all'">
       <template v-for="data in datas" :key="data.id">
         <div class="card" v-if="data.tag == `${route.params.tag}` && checkTitle(data.title)">
           <span>#{{ data.tag.toUpperCase() }}</span>
-          <h3>{{ data.title }}</h3>
+          <h3>{{ data.title.toUpperCase() }}</h3>
           <p class="date">{{ convertTime(data.date.createdAt) }}</p>
           <p class="desc">{{ data.description }}</p>
           <router-link class="btn" :to="`/article/${data.id}`">Read Article</router-link>
@@ -140,16 +140,16 @@ onMounted(() => {
       </template>
       </div>
   </section>
-  <Footer />
+  <!-- <Footer /> -->
 </template>
 
 <style scoped>
 section {
-  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin-top: 3rem;
 }
 .sort {
   display: flex;
@@ -161,7 +161,7 @@ section {
   
 }
 .search {
-  width: 30%;
+  width: 25rem;
   padding: 0.3rem 1rem;
 }
 

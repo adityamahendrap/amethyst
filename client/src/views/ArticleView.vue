@@ -28,10 +28,12 @@ onMounted(() => {
 
 <template>
   <main v-for="e in data" :key="e.id">
-    <h5 class="dir">AMETHYST / article / {{ e.title }}</h5>
+    <h5 class="dir"><router-link class="link" to="/articles/all">Article</router-link> / {{ e.title.toUpperCase() }}</h5>
     <div class="date">{{ convertTime(e.date.createdAt) }}</div>
     <h1>{{ e.title }}</h1>
-    <h6>{{e.tag}}</h6>
+    <div class="tag-list">
+      <h6 class="tag">#{{e.tag.toUpperCase()}}</h6>
+    </div>
     <div class="author">Aditya Mahendra</div>
     <div class="hero"></div>
     <section>
@@ -43,7 +45,7 @@ onMounted(() => {
       <p v-for="paragraph in paragraphs" :key="paragraph.id">
         {{ paragraph.content }}
       </p>
-      <hr class="second-line" />
+      <!-- <hr class="second-line" /> -->
     </section>
   </main>
   <!-- <ContactSection /> -->
@@ -54,10 +56,21 @@ onMounted(() => {
 section {
   max-width: 50rem;
   margin: auto;
+  margin-bottom: 6rem;
 }
 
 .dir {
   margin: 3rem;
+}
+
+.link {
+  color: #a56dfa;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.link:hover {
+  color: #772ce8;
 }
 
 .date {
@@ -75,6 +88,24 @@ h1 {
   margin: 1rem 0;
 }
 
+.tag-list {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin: 2rem 0;
+}
+
+.tag {
+  text-align: center;
+  background-color: black;
+  color: white;
+  padding: 0.2rem 1rem;
+  border-radius: 1rem;
+  cursor: pointer;
+  margin: 0.4rem;
+  width: max-content;
+}
+
 .author {
   margin: auto;
   width: max-content;
@@ -85,7 +116,7 @@ h1 {
 
 .author:hover {
   cursor: pointer;
-  border-bottom: 3px solid rgb(0, 0, 0);
+  border-bottom: 3px solid #a56dfa;
 }
 
 .hero {
@@ -120,9 +151,16 @@ p {
 @media (max-width: 860px) {
   section {
     margin: 0 1rem;
+    margin-bottom: 6rem;
   }
   h1 {
     padding: 0 1rem;
   }
+}
+
+@media (max-width: 957px) {
+  .hero {
+    border-radius: 0;
+  } 
 }
 </style>
