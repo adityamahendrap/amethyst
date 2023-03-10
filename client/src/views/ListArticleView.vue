@@ -9,7 +9,8 @@ const route = useRoute();
 const datas = ref();
 const allTag = ref([]);
 const search = ref("");
-const sortStatus = ref('time-newestToOldest')
+const sortStatus = ref('1');
+const searchResultLength = ref([])
 
 const checkTitle = (t) => {
   const title = t.toLowerCase();
@@ -90,74 +91,77 @@ onMounted(() => {
   <Navbar />
   {{ sortStatus }}
   <section>
+    <input class="search" type="text" placeholder="Search article" v-model="search"/>
     <div class="sort">
-      <button @click.prevent="sortStatus = 'title-AZ', sortDataByNameAZ()">sort by title AZ</button>
-      <button @click.prevent="sortStatus = 'title-ZA', sortDataByNameZA()">sort by title ZA</button>
-      <button @click.prevent="sortStatus = 'date-newToOld', sortDataByDateNewToOld()">sort by date new to old</button>
-      <button @click.prevent="sortStatus = 'date-oldToNew', sortDataByDateOldToNew()">sort by date old to new</button>
+      <button :class="sortStatus == 1 ? 'tagActive' : ''" class="tag" @click.prevent="sortStatus = 1, sortDataByNameAZ()">A to Z</button>
+      <button :class="sortStatus == 2 ? 'tagActive' : ''" class="tag" @click.prevent="sortStatus = 2, sortDataByNameZA()">Z to A</button>
+      <button :class="sortStatus == 3 ? 'tagActive' : ''" class="tag" @click.prevent="sortStatus = 3, sortDataByDateNewToOld()">Newest to Oldest</button>
+      <button :class="sortStatus == 4 ? 'tagActive' : ''" class="tag" @click.prevent="sortStatus = 4, sortDataByDateOldToNew()">Oldest to Newest</button>
     </div>
-    <input
-      class="search"
-      type="text"
-      placeholder="Search article"
-      v-model="search"
-    />
-    <router-link active-class="tagActive" class="tag" to="/articles/all"
-      >All</router-link
-    >
-    <router-link
-      active-class="tagActive"
-      class="tag"
-      v-for="(tag, index) in allTag"
-      :key="index"
-      :to="`/articles/${tag}`"
-      >#{{ tag }}</router-link
-    >
+    <div>
+      <router-link active-class="tagActive" class="tag" to="/articles/all">All</router-link>
+      <router-link
+        active-class="tagActive"
+        class="tag"
+        v-for="(tag, index) in allTag"
+        :key="index"
+        :to="`/articles/${tag}`"
+        >#{{ tag.toUpperCase() }}</router-link
+      >
+    </div>
 
     <h1>Some Article</h1>
 
     <div class="container" v-if="route.params.tag == 'all'">
-      <div v-for="data in datas" :key="data.id">
+      <template v-for="data in datas" :key="data.id">
         <div class="card" v-if="checkTitle(data.title)">
+          <span>#{{ data.tag.toUpperCase() }}</span>
           <h3>{{ data.title }}</h3>
           <p class="date">{{ convertTime(data.date.createdAt) }}</p>
-          <span>#{{ data.tag.toUpperCase() }}</span>
           <p class="desc">{{ data.description }}</p>
           <router-link class="btn" :to="`/article/${data.id}`"
             >Read Article</router-link
           >
         </div>
-      </div>
+      </template>
     </div>
+
+    <h1>Not Found</h1>
     <!--  -->
     <div class="container" v-if="route.params.tag != 'all'">
-      <div v-for="data in datas" :key="data.id">
-        <div
-          class="card"
-          v-if="data.tag == `${route.params.tag}` && checkTitle(data.title)"
-        >
+      <template v-for="data in datas" :key="data.id">
+        <div class="card" v-if="data.tag == `${route.params.tag}` && checkTitle(data.title)">
+          <span>#{{ data.tag.toUpperCase() }}</span>
           <h3>{{ data.title }}</h3>
           <p class="date">{{ convertTime(data.date.createdAt) }}</p>
-          <span>#{{ data.tag.toUpperCase() }}</span>
           <p class="desc">{{ data.description }}</p>
-          <router-link class="btn" :to="`/article/${data.id}`"
-            >Read Article</router-link
-          >
+          <router-link class="btn" :to="`/article/${data.id}`">Read Article</router-link>
         </div>
+      </template>
       </div>
-    </div>
   </section>
   <Footer />
 </template>
 
 <style scoped>
-.sort {
+section {
+  width: 100%;
   display: flex;
   flex-direction: column;
-  width: 15rem;
+  justify-content: center;
+  align-items: center;
+}
+.sort {
+  display: flex;
+  margin: 1rem;
+  margin-top: 3rem;
+}
+
+.sort .tag {
+  
 }
 .search {
-  margin: 1rem;
+  width: 30%;
   padding: 0.3rem 1rem;
 }
 
@@ -187,11 +191,12 @@ h1 {
   flex-wrap: wrap;
   justify-content: center;
   gap: 2rem;
+  margin: auto;
   margin-bottom: 4rem;
 }
 
 .card {
-  background-color: #222222;
+  background-color: #1f1f23;
   text-align: start;
   width: 20rem;
   padding: 1rem;
@@ -200,6 +205,15 @@ h1 {
 
 .card > * {
   color: white;
+}
+
+.card span {
+  background-color: #efeff1;
+  color: #1f1f23;
+  width: max-content;
+  padding: 0.2rem 0.5rem;
+  border-radius: 0.3rem;
+  margin-bottom: 1rem;
 }
 
 .date {
@@ -221,6 +235,6 @@ h1 {
 }
 
 .btn:hover {
-  opacity: 0.9;
+  color: #a56dfa;
 }
 </style>
