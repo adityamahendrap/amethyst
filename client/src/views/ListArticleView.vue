@@ -160,10 +160,18 @@ section {
 .sort .tag {
   
 }
-.search {
+
+
+input {
+  all: unset;
+  padding: 0.2rem 0.5rem;
+  border-radius: 0.3rem;
+  background-color: white;
+  border: 2px solid black;
+  color: black;
   width: 25rem;
-  padding: 0.3rem 1rem;
 }
+
 
 .tag {
   all: unset;
