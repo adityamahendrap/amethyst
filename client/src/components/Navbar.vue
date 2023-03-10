@@ -23,7 +23,6 @@
 </template>
 
 <style scoped>
-  @import "../../public/root.css";
   .hide{
     display: none;
   }
