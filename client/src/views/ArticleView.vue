@@ -14,9 +14,10 @@ const getArticle = async () => {
     `http://localhost:5000/articles/${route.params.id}`
   );
   if (result.status == 200) {
-    data.value = result.data.payload.datas;
-    paragraphs.value = result.data.payload.datas[0].paragraph;
-    console.log(paragraphs.value);
+    const _data = result.data.payload.datas;
+    const { paragraph } = _data[0];
+    data.value = _data;
+    paragraphs.value = paragraph;
   }
 };
 
@@ -29,20 +30,21 @@ onMounted(() => {
 
 <template>
   <main v-for="e in data" :key="e.id">
-    <h5 class="dir"><router-link class="link" to="/articles/all">Article</router-link> / {{ e.title.toUpperCase() }}</h5>
+    <h5 class="dir">
+      <router-link class="link" to="/articles/all">Article</router-link> /
+      {{ e.title.toUpperCase() }}
+    </h5>
     <div class="date">{{ convertTime(e.createdAt) }}</div>
     <h1>{{ e.title }}</h1>
     <div class="tag-list">
-      <h6 class="tag">#{{e.tag.toUpperCase()}}</h6>
+      <h6 class="tag">#{{ e.tag.toUpperCase() }}</h6>
     </div>
     <div class="author">Aditya Mahendra</div>
     <div class="hero"></div>
     <section>
       <h2>{{ e.description }}</h2>
       <br />
-      <!-- {{ paragraphs }} -->
       <p>{{ paragraphs }}</p>
-      <!-- <hr class="second-line" /> -->
     </section>
   </main>
   <!-- <ContactSection /> -->
@@ -158,6 +160,6 @@ p {
 @media (max-width: 957px) {
   .hero {
     border-radius: 0;
-  } 
+  }
 }
 </style>

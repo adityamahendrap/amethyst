@@ -9,8 +9,9 @@ const router = useRouter();
 
 const getAllData = async () => {
   const result = await axios.get(`http://localhost:5000/articles`);
+  const _ = result.data.payload.datas
   if (result.status == 200) {
-    datas.value = result.data.payload.datas;
+    datas.value = _;
   }
 };
 

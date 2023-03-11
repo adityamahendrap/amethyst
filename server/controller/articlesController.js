@@ -1,4 +1,4 @@
-const db = require("../model/connection.js");
+const db = require("../database/connection.js");
 const response = require("../response.js");
 
 const userController = {
@@ -19,7 +19,8 @@ const userController = {
     });
   },
   postData: (req, resp) => {
-    const { title, tag, description, paragraph, createdAt, lastUpdated } = req.body;
+    const { title, tag, description, paragraph, createdAt, lastUpdated } =
+      req.body;
     const unixTimestamp = Date.now();
     const sql = `INSERT INTO articles VALUES (NULL,'${title}','${tag}','${description}','${paragraph}','${unixTimestamp}', NULL)`;
 
@@ -49,7 +50,12 @@ const userController = {
         };
         response(201, data, "PUT article", resp);
       } else {
-        response(404, { isUpdated: res.affectedRows }, "not found, cannot PUT article", resp);
+        response(
+          404,
+          { isUpdated: res.affectedRows },
+          "not found, cannot PUT article",
+          resp
+        );
       }
     });
   },
@@ -58,10 +64,15 @@ const userController = {
 
     db.query(sql, (err, res) => {
       if (err) throw err;
-      if(res.affectedRows) {
+      if (res.affectedRows) {
         response(201, { isDeleted: res.affectedRows }, "DELETE article", resp);
       } else {
-        response(404, { isDeleted: res.affectedRows }, "not found, cannot DELETE article", resp);
+        response(
+          404,
+          { isDeleted: res.affectedRows },
+          "not found, cannot DELETE article",
+          resp
+        );
       }
     });
   },

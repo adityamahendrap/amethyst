@@ -11,27 +11,16 @@ const togglePassword = ref('password')
 const warning = ref('')
 
 const login = async () => {
-  const endpoint = `http://localhost:3000/admin?username=${username.value}&password=${password.value}`;
-  const result = await axios.get(endpoint);
-  if (result.status == 200 && result.data.length) {
-    localStorage.setItem('admin-info', JSON.stringify(result.data[0]))
+  const result = await axios.get(`http://localhost:5000/admin?username=${username.value}&password=${password.value}`)
+  const _datas = result.data.payload.datas
+  
+  if(result.status == 200 && _datas.length) {
+    localStorage.setItem('admin-info', JSON.stringify(_datas[0]))
     router.push({ name: "dashboard" });
   } else {
-    // alert("User not found");
     warning.value = '* User not found'
   }
-};
-
-// const login = async () => {
-//   const result = await axios.get(`http://localhost:5000/admin?username=${username.value}&password=${password.value}`)
-//   console.log(result.data.payload.datas.length);
-//   if(result.status == 200 && result.data.payload.datas.length == 1) {
-//     localStorage.setItem('admin-info', JSON.stringify(result.data.payload.datas[0]))
-//     router.push({ name: "dashboard" });
-//   } else {
-//     warning.value = '* User not found'
-//   }
-// }
+}
 
 </script>
 

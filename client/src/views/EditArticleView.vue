@@ -16,13 +16,12 @@ const getData = async () => {
   const result = await axios.get(
     `http://localhost:5000/articles/${route.params.id}`
   );
+  const _data = result.data.payload.datas[0]
   data.value = result.data.payload.datas;
-  title.value = result.data.payload.datas[0].title;
-  // console.log(title.value);
-  tag.value = result.data.payload.datas[0].tag;
-  description.value = result.data.payload.datas[0].description;
-  paragraph.value = result.data.payload.datas[0].paragraph;
-  console.log(title.value);
+  title.value = _data.title;
+  tag.value = _data.tag;
+  description.value = _data.description;
+  paragraph.value = _data.paragraph;
 };
 
 const updateData = async () => {
@@ -50,9 +49,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <!-- {{ data }} -->
   <h1>Edit</h1>
-  <!-- <Navboard /> -->
   <router-link to="/dashboard">Back</router-link>
   <section>
     <label>Judul</label>

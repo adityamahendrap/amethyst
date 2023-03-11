@@ -20,10 +20,11 @@ const convertTime = (unix) => new Date(unix).toLocaleDateString("en-US");
 const getAllData = async () => {
   const result = await axios.get(`http://localhost:5000/articles`);
   if (result.status == 200) {
-    datas.value = result.data.payload.datas;
+    const _datas = result.data.payload.datas
+    datas.value = _datas;
     sortDataByNameAZ()
 
-    getAndFilterTag(result.data.payload.datas)
+    getAndFilterTag(_datas)
   }
 };
 
@@ -118,8 +119,6 @@ onMounted(() => {
         </div>
       </template>
     </div>
-
-    <!-- <h1>Not Found</h1> -->
     <!--  -->
     <div class="container" v-if="route.params.tag != 'all'">
       <template v-for="data in datas" :key="data.id">
@@ -148,10 +147,6 @@ section {
   display: flex;
   margin: 1rem;
   margin-top: 3rem;
-}
-
-.sort .tag {
-  
 }
 
 
