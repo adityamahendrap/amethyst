@@ -22,6 +22,17 @@ const login = async () => {
   }
 };
 
+// const login = async () => {
+//   const result = await axios.get(`http://localhost:5000/admin?username=${username.value}&password=${password.value}`)
+//   console.log(result.data.payload.datas.length);
+//   if(result.status == 200 && result.data.payload.datas.length == 1) {
+//     localStorage.setItem('admin-info', JSON.stringify(result.data.payload.datas[0]))
+//     router.push({ name: "dashboard" });
+//   } else {
+//     warning.value = '* User not found'
+//   }
+// }
+
 </script>
 
 <template>

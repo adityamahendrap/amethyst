@@ -7,20 +7,15 @@ import { useRouter } from "vue-router";
 const datas = ref();
 const router = useRouter();
 
-
 const getAllData = async () => {
-  const endpoint = `http://localhost:3000/articles`;
-  const result = await axios.get(endpoint);
+  const result = await axios.get(`http://localhost:5000/articles`);
   if (result.status == 200) {
-    // console.log(result.data);
-    datas.value = result.data;
-    // console.log(datas.value[0].date.lastUpdated);
+    datas.value = result.data.payload.datas;
   }
 };
 
 const deleteData = async (id) => {
-  // console.log(id);
-  const result = await axios.delete(`http://localhost:3000/articles/${id}`);
+  const result = await axios.delete(`http://localhost:5000/articles/${id}`);
   getAllData();
 };
 
@@ -28,7 +23,6 @@ const paragraphs = ref();
 const getParagraphs = (id) => {
   paragraphs.value = datas.value.filter((data) => data.id == id);
   paragraphs.value = paragraphs.value[0].paragraph
-  // console.log(paragraphs.value)
 };
 
 const convertTime = (unix) => new Date(unix).toLocaleDateString("en-US")
@@ -53,6 +47,7 @@ onMounted(() => {
       <tr>
         <th scope="col">No</th>
         <th scope="col">Title</th>
+        <th scope="col">Tag</th>
         <th scope="col">Description</th>
         <th scope="col">Paragraph</th>
         <th scope="col">created</th>
@@ -67,8 +62,6 @@ onMounted(() => {
         <td>{{ data.title }}</td>
         <td>#{{ data.tag }}</td>
         <td>{{ data.description }}</td>
-        <td>{{ convertTime(data.date.createdAt) }}</td>
-        <td>{{ data.date.lastUpdated == null ? '-' :  convertTime(data.date.lastUpdated)}}</td>
         <td>
           <button
             type="button"
@@ -80,6 +73,8 @@ onMounted(() => {
             See
           </button>
         </td>
+        <td>{{ convertTime(data.createdAt) }}</td>
+        <td>{{ data.lastUpdated == null ? '-' :  convertTime(data.lastUpdated)}}</td>
         <td><router-link :to="`/edit/${data.id}`">Edit</router-link></td>
         <td><button class="btn btn-danger" @click="deleteData(data.id)">X</button></td>
       </tr>
@@ -107,9 +102,7 @@ onMounted(() => {
           ></button>
         </div>
         <div class="modal-body">
-          <div v-for="par in paragraphs" :key="par.id">
-            <p>{{par.content}}</p>
-          </div>
+            <p>{{paragraphs}}</p>
         </div>
       </div>
     </div>

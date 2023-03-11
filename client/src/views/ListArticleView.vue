@@ -2,7 +2,6 @@
 import { onMounted, ref } from "vue";
 import axios from "axios";
 import Navbar from "../components/Navbar.vue";
-import Footer from "../components/Footer.vue";
 import { useRoute } from "vue-router";
 
 const route = useRoute();
@@ -10,7 +9,6 @@ const datas = ref();
 const allTag = ref([]);
 const search = ref("");
 const sortStatus = ref('1');
-const searchResultLength = ref([])
 
 const checkTitle = (t) => {
   const title = t.toLowerCase();
@@ -18,16 +16,6 @@ const checkTitle = (t) => {
 };
 
 const convertTime = (unix) => new Date(unix).toLocaleDateString("en-US");
-
-// const getAllData = async () => {
-//   const endpoint = `http://localhost:3000/articles`;
-//   const result = await axios.get(endpoint);
-//   if (result.status == 200) {
-//     datas.value = result.data;
-
-//     getAndFilterTag(result.data)
-//   }
-// };
 
 const getAllData = async () => {
   const result = await axios.get(`http://localhost:5000/articles`);
@@ -50,45 +38,41 @@ const getAndFilterTag = (resultData) => {
 
 const sortDataByNameAZ = () => {
   datas.value.sort((a, b) => {
-      let A = a.title.toUpperCase(); // ignore upper and lowercase
-      let B = b.title.toUpperCase(); // ignore upper and lowercase
+      let A = a.title.toUpperCase(); 
+      let B = b.title.toUpperCase(); 
       if (A < B) {
         return -1;
       }
       if (A > B) {
         return 1;
       }
-      // names must be equal
       return 0;
     });
-    console.log(datas.value);
 }
 
 const sortDataByNameZA = () => {
   datas.value.sort((a, b) => {
-      let A = a.title.toUpperCase(); // ignore upper and lowercase
-      let B = b.title.toUpperCase(); // ignore upper and lowercase
+      let A = a.title.toUpperCase(); 
+      let B = b.title.toUpperCase(); 
       if (A > B) {
         return -1;
       }
       if (A < B) {
         return 1;
       }
-      // names must be equal
       return 0;
     });
-    console.log(datas.value);
 }
 
 const sortDataByDateNewToOld = () => {
   datas.value.sort((a, b) => {
-    return a.createdAt - b.createdAt;
+    return b.createdAt - a.createdAt;
   });
 }
 
 const sortDataByDateOldToNew = () => {
   datas.value.sort((a, b) => {
-    return b.createdAt - a.createdAt;
+    return a.createdAt - b.createdAt;
   });
 }
 
@@ -99,7 +83,6 @@ onMounted(() => {
 
 <template>
   <Navbar />
-  <!-- {{ sortStatus }} -->
   <section>
     <input class="search" type="text" placeholder="Search article" v-model="search"/>
     <div class="sort">

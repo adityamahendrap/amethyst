@@ -1,14 +1,12 @@
 <script setup>
-import Navboard from "../components/Navboard.vue";
 import { ref, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import axios from "axios";
 
 const route = useRoute();
 const router = useRouter();
-// console.log(route.params.id);
 
-const data = ref()
+const data = ref();
 const title = ref();
 const tag = ref();
 const description = ref();
@@ -16,39 +14,33 @@ const paragraph = ref();
 
 const getData = async () => {
   const result = await axios.get(
-    `http://localhost:3000/articles/${route.params.id}`
+    `http://localhost:5000/articles/${route.params.id}`
   );
-  data.value = result.data
-  title.value = result.data.title;
-  tag.value = result.data.tag;
-  description.value = result.data.description;
-  paragraph.value = result.data.paragraph[0].content;
-  // console.log(data.value.date.createdAt);
+  data.value = result.data.payload.datas;
+  title.value = result.data.payload.datas[0].title;
+  // console.log(title.value);
+  tag.value = result.data.payload.datas[0].tag;
+  description.value = result.data.payload.datas[0].description;
+  paragraph.value = result.data.payload.datas[0].paragraph;
+  console.log(title.value);
 };
 
 const updateData = async () => {
   const result = await axios.put(
-    `http://localhost:3000/articles/${route.params.id}`,
+    `http://localhost:5000/articles/${route.params.id}`,
     {
       title: title.value,
       tag: tag.value,
-      date: {
-        createdAt: data.value.date.createdAt,
-        lastUpdated: Date.now(),
-      },
+      createdAt: data.value.createdAt,
+      lastUpdated: Date.now(),
       description: description.value,
-      paragraph: [
-        {
-          content: paragraph.value,
-          id: 1,
-        }
-      ],
-      id: route.params.id
+      paragraph: paragraph.value,
+      id: route.params.id,
     }
   );
-  if(result.status == 200) {
-    alert('update berhasil')
-    router.push({name: 'dashboard'})
+  if (result.status == 201) {
+    alert("update berhasil");
+    router.push({ name: "dashboard" });
   }
 };
 

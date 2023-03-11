@@ -1,36 +1,28 @@
 <script setup>
-import { reactive, ref } from "vue";
+import { ref } from "vue";
 import axios from "axios";
-import Navboard from "../components/Navboard.vue";
-import {useRouter} from 'vue-router';
+import { useRouter } from "vue-router";
 
-const router = useRouter()
+const router = useRouter();
 const title = ref("");
 const tag = ref("");
 const description = ref("");
 const paragraph = ref("");
 
 const addData = async () => {
-  const result = await axios.post(`http://localhost:3000/articles`, {
+  const result = await axios.post(`http://localhost:5000/articles`, {
     title: title.value,
     tag: tag.value,
-    date: {
-      createdAt: Date.now(),
-      lastUpdated: null,
-    },
+    createdAt: Date.now(),
+    lastUpdated: null,
     description: description.value,
-    paragraph: [
-      {
-        content: paragraph.value,
-        id: 1,
-      },
-    ],
+    paragraph: paragraph.value,
   });
 
-  if(result.status == 201) {
-    console.log('ok');
-    alert('berhasil ditambahkan')
-    router.push({name: 'dashboard'})
+  if (result.status == 201) {
+    console.log("ok");
+    alert("berhasil ditambahkan");
+    router.push({ name: "dashboard" });
   }
 };
 </script>

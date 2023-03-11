@@ -15,7 +15,7 @@ app.get("/", (req, resp) => {
 });
 
 app.route("/admin")
-  .get(adminContoller.getAllData)
+  .get(adminContoller.checkData)
 
 app.route("/articles")
   .get(articlesController.getAllData)
