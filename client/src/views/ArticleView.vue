@@ -1,11 +1,12 @@
 <script setup>
 import axios from "axios";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import { onMounted, ref } from "vue";
 import ContactSection from "../components/ContactSection.vue";
 import Footer from "../components/Footer.vue";
 
 const route = useRoute();
+const router = useRouter();
 const data = ref();
 const paragraphs = ref();
 
@@ -37,12 +38,12 @@ onMounted(() => {
     <div class="date">{{ convertTime(e.createdAt) }}</div>
     <h1>{{ e.title }}</h1>
     <div class="tag-list">
-      <h6 class="tag">#{{ e.tag.toUpperCase() }}</h6>
+      <h6 class="tag" @click="router.push(`/articles/${e.tag}`)">#{{ e.tag.toUpperCase() }}</h6>
     </div>
     <div class="author">Aditya Mahendra</div>
     <div class="hero"></div>
     <section>
-      <h2>{{ e.description }}</h2>
+      <h2 class="desc">{{ e.description }}</h2>
       <br />
       <p>{{ paragraphs }}</p>
     </section>
@@ -52,14 +53,24 @@ onMounted(() => {
 </template>
 
 <style scoped>
+
+* {
+  color: white;
+}
+
+main {
+  background: #1F1F23;
+}
+
 section {
   max-width: 50rem;
   margin: auto;
-  margin-bottom: 6rem;
+  padding-bottom: 6rem;
 }
 
 .dir {
-  margin: 3rem;
+  padding: 2rem;
+  color: white;
 }
 
 .link {
@@ -74,8 +85,8 @@ section {
 
 .date {
   font-size: 16px;
-  margin-top: 3rem;
   text-align: center;
+  padding-top: 1rem;
 }
 
 h1 {
@@ -95,14 +106,19 @@ h1 {
 }
 
 .tag {
-  text-align: center;
-  background-color: black;
+  all: unset;
   color: white;
-  padding: 0.2rem 1rem;
-  border-radius: 1rem;
-  cursor: pointer;
-  margin: 0.4rem;
+  background-color: #7D41E1;
   width: max-content;
+  padding: 0.5rem 2rem;
+  border-radius: 5rem;
+  cursor: pointer;
+  margin: 0.5rem;
+  font-weight: bold; 
+}
+
+.tag:hover {
+  opacity: 0.8;
 }
 
 .author {
@@ -110,12 +126,12 @@ h1 {
   width: max-content;
   font-size: 22px;
   text-align: center;
-  border-bottom: 3px solid rgb(0, 0, 0, 0.2);
+  border-bottom: 3px solid rgb(138, 138, 138)
 }
 
 .author:hover {
   cursor: pointer;
-  border-bottom: 3px solid #a56dfa;
+  border-bottom: 3px solid #7D41E1;
 }
 
 .hero {
@@ -125,7 +141,7 @@ h1 {
   margin: auto;
   margin-top: 4rem;
   margin-bottom: 7rem;
-  background: #000000c1;
+  background: #7D41E1;
   max-width: 60rem;
   text-align: center;
   aspect-ratio: 16/7;
@@ -134,6 +150,10 @@ h1 {
 
 h2 {
   font-size: clamp(24px, 14.8450704225px + 1.8309859155vw, 50px);
+  color: #a56dfa;
+  border-left: 5px solid #7D41E1;
+  padding-bottom: 0.8rem;
+  padding-left: 1rem;
 }
 
 p {
@@ -150,10 +170,13 @@ p {
 @media (max-width: 860px) {
   section {
     margin: 0 1rem;
-    margin-bottom: 6rem;
+    padding-bottom: 3rem;
   }
   h1 {
     padding: 0 1rem;
+  }
+  .hero {
+    margin-bottom: 4rem;
   }
 }
 

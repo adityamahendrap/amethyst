@@ -5,6 +5,10 @@
   /* border: 1px solid blueviolet; */
 }
 
+body {
+  background-color: #1F1F23;
+}
+
 ul {
   list-style-type: none;
 }

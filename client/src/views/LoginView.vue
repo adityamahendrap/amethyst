@@ -25,7 +25,7 @@ const login = async () => {
 </script>
 
 <template>
-  <section>
+  <section class="animate">
     <div class="container">
       <h1>Log in to manage content</h1>
       <h6 class="warning">{{ warning }}</h6>
@@ -60,6 +60,31 @@ const login = async () => {
 * {
   color: #efeff1;
 }
+
+.animate {
+  background: linear-gradient(38deg, #7d41e1, #71579d, #b793f2, #601da5);
+  background-size: 800% 800%;
+
+  -webkit-animation: AnimationName 20s ease infinite;
+  -moz-animation: AnimationName 20s ease infinite;
+  animation: AnimationName 20s ease infinite;
+}
+
+@-webkit-keyframes AnimationName {
+  0%{background-position:94% 0%}
+  50%{background-position:7% 100%}
+  100%{background-position:94% 0%}
+}
+@-moz-keyframes AnimationName {
+  0%{background-position:94% 0%}
+  50%{background-position:7% 100%}
+  100%{background-position:94% 0%}
+}
+@keyframes AnimationName {
+  0%{background-position:94% 0%}
+  50%{background-position:7% 100%}
+  100%{background-position:94% 0%}
+} 
 
 section {
   height: 100vh;
@@ -142,6 +167,7 @@ input:focus {
   color: #a56dfa;
   margin-top: 0.2rem;
   width: max-content;
+  transition: color  0.3s;
 }
 .forgot-pw:hover {
   color: #772ce8;
@@ -153,6 +179,7 @@ input:focus {
   border-radius: 0.3rem;
   background-color: #a56dfa;
   border-color: #a56dfa;
+  transition: background-color 0.2s;
 }
 
 button.login {
@@ -161,6 +188,7 @@ button.login {
   border-radius: 0.3rem;
   background-color: #a56dfa;
   border-color: #a56dfa;
+  transition: background-color 0.2s;
 }
 
 button:hover {
@@ -175,7 +203,7 @@ button:disabled {
 }
 
 .link {
-  color: black;
+  color: white;
   margin-top: 1rem;
 }
 
@@ -183,3 +211,28 @@ button:disabled {
   opacity: 0.8;
 }
 </style>
+<!-- 
+.css-selector {
+  background: linear-gradient(38deg, #7d41e1, #71579d, #b793f2, #601da5);
+  background-size: 800% 800%;
+
+  -webkit-animation: AnimationName 20s ease infinite;
+  -moz-animation: AnimationName 20s ease infinite;
+  animation: AnimationName 20s ease infinite;
+}
+
+@-webkit-keyframes AnimationName {
+  0%{background-position:94% 0%}
+  50%{background-position:7% 100%}
+  100%{background-position:94% 0%}
+}
+@-moz-keyframes AnimationName {
+  0%{background-position:94% 0%}
+  50%{background-position:7% 100%}
+  100%{background-position:94% 0%}
+}
+@keyframes AnimationName {
+  0%{background-position:94% 0%}
+  50%{background-position:7% 100%}
+  100%{background-position:94% 0%}
+} -->

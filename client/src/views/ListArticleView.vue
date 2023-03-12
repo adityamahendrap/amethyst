@@ -2,9 +2,11 @@
 import { onMounted, ref } from "vue";
 import axios from "axios";
 import Navbar from "../components/Navbar.vue";
-import { useRoute } from "vue-router";
+import Footer from "../components/Footer.vue";
+import { useRoute, useRouter } from "vue-router";
 
 const route = useRoute();
+const router = useRouter();
 const datas = ref();
 const allTag = ref([]);
 const search = ref("");
@@ -12,8 +14,12 @@ const sortStatus = ref('1');
 
 const checkTitle = (t) => {
   const title = t.toLowerCase();
-  return title.includes(search.value.toLowerCase());
+  const matchedsubString = title.includes(search.value.toLowerCase());
+  
+  return matchedsubString;
 };
+
+const totalMatchedWhenSearch = ref([]);
 
 const convertTime = (unix) => new Date(unix).toLocaleDateString("en-US");
 
@@ -83,71 +89,105 @@ onMounted(() => {
 </script>
 
 <template>
+  
   <Navbar />
   <section>
-    <input class="search" type="text" placeholder="Search article" v-model="search"/>
-    <div class="sort">
-      <button :class="sortStatus == 1 ? 'tagActive' : ''" class="tag" @click.prevent="sortStatus = 1, sortDataByNameAZ()">A to Z</button>
-      <button :class="sortStatus == 2 ? 'tagActive' : ''" class="tag" @click.prevent="sortStatus = 2, sortDataByNameZA()">Z to A</button>
-      <button :class="sortStatus == 3 ? 'tagActive' : ''" class="tag" @click.prevent="sortStatus = 3, sortDataByDateNewToOld()">Newest to Oldest</button>
-      <button :class="sortStatus == 4 ? 'tagActive' : ''" class="tag" @click.prevent="sortStatus = 4, sortDataByDateOldToNew()">Oldest to Newest</button>
-    </div>
-    <div>
-      <router-link active-class="tagActive" class="tag" to="/articles/all">All</router-link>
-      <router-link
+    <div class="container">
+      <div class="box animate">
+        <div class="hero-text">
+          <img src="../assets/line.png" alt="">
+          <h1>{{ search == '' ? 'Some Article' : `Article with "${search}"` }}</h1>
+          <h1>{{totalMatchedWhenSearch}}</h1>
+        </div>
+        <input class="search" type="text" placeholder="Search for a thing..." v-model="search"/>
+      </div>
+      <div class="sort">
+        <button :class="sortStatus == 1 ? 'tagActive' : ''" class="tag" @click.prevent="sortStatus = 1, sortDataByNameAZ()">A to Z</button>
+        <button :class="sortStatus == 2 ? 'tagActive' : ''" class="tag" @click.prevent="sortStatus = 2, sortDataByNameZA()">Z to A</button>
+        <button :class="sortStatus == 3 ? 'tagActive' : ''" class="tag" @click.prevent="sortStatus = 3, sortDataByDateNewToOld()">Newest to Oldest</button>
+        <button :class="sortStatus == 4 ? 'tagActive' : ''" class="tag" @click.prevent="sortStatus = 4, sortDataByDateOldToNew()">Oldest to Newest</button>
+      </div>
+      <div class="tag-list">
+        <router-link active-class="tagActive" class="tag" to="/articles/all">All</router-link>
+        <router-link
         active-class="tagActive"
         class="tag"
         v-for="(tag, index) in allTag"
         :key="index"
         :to="`/articles/${tag}`"
-        >#{{ tag.toUpperCase() }}</router-link
-      >
-    </div>
-
-    <h1>{{ search == '' ? 'Some Article' : `Article with "${search}"`  }}</h1>
-
-    <div class="container" v-if="route.params.tag == 'all'">
-      <template v-for="data in datas" :key="data.id">
-        <div class="card" v-if="checkTitle(data.title)">
-          <span>#{{ data.tag.toUpperCase() }}</span>
-          <h3>{{ data.title.toUpperCase() }}</h3>
-          <p class="date">{{ convertTime(data.createdAt) }}</p>
-          <p class="desc">{{ data.description }}</p>
-          <router-link class="btn" :to="`/article/${data.id}`"
-            >Read Article</router-link
-          >
-        </div>
-      </template>
-    </div>
-    <!--  -->
-    <div class="container" v-if="route.params.tag != 'all'">
-      <template v-for="data in datas" :key="data.id">
-        <div class="card" v-if="data.tag == `${route.params.tag}` && checkTitle(data.title)">
-          <span>#{{ data.tag.toUpperCase() }}</span>
-          <h3>{{ data.title.toUpperCase() }}</h3>
-          <p class="date">{{ convertTime(data.createdAt) }}</p>
-          <p class="desc">{{ data.description }}</p>
-          <router-link class="btn" :to="`/article/${data.id}`">Read Article</router-link>
-        </div>
-      </template>
+        >#{{ tag.toUpperCase() }}</router-link>
       </div>
+
+      
+      <h1>Not Found</h1>
+      <div class="wrapper" v-if="route.params.tag == 'all'">
+        <template v-for="data in datas" :key="data.id">
+          <div class="card" v-if="checkTitle(data.title)">
+            <div class="image" @click="router.push(`/article/${data.id}`)">
+              <img src="" alt="">
+            </div>
+            <div class="text">
+              <div>
+                <span class="me-3 tag-in-card" @click="router.push(`/articles/${data.tag}`)">#{{ data.tag.toUpperCase() }}</span>
+                <span class="date">{{ convertTime(data.createdAt) }}</span>
+              </div>
+              <h3 @click="router.push(`/article/${data.id}`)">{{ data.title.toUpperCase() }}</h3>
+              <p class="desc">{{ data.description }}</p>
+            </div>
+          </div>
+        </template>
+      </div>
+      <!-- <div class="wrapper" v-if="route.params.tag != 'all'">
+        <template v-for="data in datas" :key="data.id">
+          <div class="card" v-if="data.tag == `${route.params.tag}` && checkTitle(data.title)">
+            <div class="image" @click="router.push(`/article/${data.id}`)">
+              <img src="" alt="">
+            </div>
+            <div class="text">
+              <div>
+                <span class="me-3 tag-in-card" @click="router.push(`/articles/${data.tag}`)">#{{ data.tag.toUpperCase() }}</span>
+                <span class="date">{{ convertTime(data.createdAt) }}</span>
+              </div>
+              <h3 @click="router.push(`/article/${data.id}`)">{{ data.title.toUpperCase() }}</h3>
+              <p class="desc">{{ data.description }}</p>
+            </div>
+          </div>
+        </template>
+      </div> -->
+    </div>
   </section>
-  <!-- <Footer /> -->
+  <Footer/>
 </template>
 
 <style scoped>
 section {
+  background-color: #1F1F23;
+}
+
+h1 {
+  color: white;
+}
+.container {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-top: 3rem;
 }
-.sort {
+
+.box {
+  background-color: #7D41E1;
+  color: white;
+  width: 100%;
+  text-align: center;
+  height: 15rem;
+  border-radius: 1rem;
   display: flex;
-  margin: 1rem;
-  margin-top: 3rem;
+  align-items: center;
+  justify-content: center;
+  position: relative;
 }
+
+
 
 
 input {
@@ -155,61 +195,133 @@ input {
   padding: 0.2rem 0.5rem;
   border-radius: 0.3rem;
   background-color: white;
-  border: 2px solid black;
   color: black;
   width: 25rem;
+  position: absolute;
+  bottom: 0;
+  transform: translate(0, 50%);
+  background-color: #3D3D40;
+  color: #B4B4B4;
+  text-align: left;
+  font-size: 1rem;
+  padding: 1rem 1.5rem;
 }
 
 
+.hero-text {
+  position: relative;
+}
+
+.hero-text h1 {
+  font-weight: bold;
+}
+
+.hero-text img {
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform: translate(-80%, -50%);
+}
+
+
+.sort {
+  display: flex;
+  margin: 1rem;
+  margin-top: 4rem;
+  margin-bottom: 1rem;
+  width: max-content;
+  flex-wrap: wrap;
+}  
+
+.sort button:hover {
+  opacity: 0.8;
+}
+
+.tag-list {
+  padding-bottom: 0.5rem;
+}
+
 .tag {
   all: unset;
-  background-color: white;
-  color: black;
-  padding: 0.2rem 1rem;
-  border-radius: 1rem;
-  border: 1px solid black;
+  background-color: transparent;
+  color: #9A9A9A;
+  width: max-content;
+  padding: 0.5rem 2rem;
+  border-radius: 5rem;
   cursor: pointer;
-  margin: 0.4rem;
+  margin: 0.5rem;
+  font-weight: bold; 
+}
+
+.tag:hover {
+  opacity: 0.8;
 }
 
 .tagActive {
   color: white;
-  background-color: black;
+  background-color: #7D41E1;
+
 }
 
-h1 {
-  margin: 3rem;
-  text-align: center;
-}
-
-.container {
+.wrapper {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   gap: 2rem;
   margin: auto;
+  margin-top: 3rem;
   margin-bottom: 4rem;
 }
 
 .card {
-  background-color: #1f1f23;
+  background-color: transparent;
   text-align: start;
   width: 20rem;
-  padding: 1rem;
-  border-radius: 0.5rem;
 }
 
 .card > * {
   color: white;
 }
 
-.card span {
-  background-color: #efeff1;
-  color: #1f1f23;
+.card .image {
+  width: 100%;
+  background-color: blueviolet;
+  border-radius: 1rem;
+  aspect-ratio: 16/9;
+}
+
+.card .image:hover {
+  opacity: 0.5;
+  cursor: pointer;
+}
+
+.card .text {
+  padding: 2rem;
+}
+
+h3 {
+  margin-top: 1.5rem;
+  margin-bottom: 0.7rem;
+}
+
+h3:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.tag-in-card {
+  background-color: #7D41E1;
+  color: white;
   width: max-content;
-  padding: 0.2rem 0.5rem;
-  border-radius: 0.3rem;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
   margin-bottom: 1rem;
+  font-weight: bold;
+}
+
+.tag-in-card:hover {
+  opacity: 0.8;
+  cursor: pointer;
 }
 
 .date {
@@ -233,4 +345,30 @@ h1 {
 .btn:hover {
   color: #a56dfa;
 }
+
+
+.animate {
+  background: linear-gradient(38deg, #7d41e1, #71579d, #b793f2, #601da5);
+  background-size: 800% 800%;
+
+  -webkit-animation: AnimationName 20s ease infinite;
+  -moz-animation: AnimationName 20s ease infinite;
+  animation: AnimationName 20s ease infinite;
+}
+
+@-webkit-keyframes AnimationName {
+  0%{background-position:94% 0%}
+  50%{background-position:7% 100%}
+  100%{background-position:94% 0%}
+}
+@-moz-keyframes AnimationName {
+  0%{background-position:94% 0%}
+  50%{background-position:7% 100%}
+  100%{background-position:94% 0%}
+}
+@keyframes AnimationName {
+  0%{background-position:94% 0%}
+  50%{background-position:7% 100%}
+  100%{background-position:94% 0%}
+} 
 </style>

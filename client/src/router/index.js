@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
-// import HomeView from "../views/HomeView.vue";
+import HomeView from "../views/HomeView.vue";
 import ListArticleView from "../views/ListArticleView.vue";
 import ArticleView from "../views/ArticleView.vue";
 import LoginView from "../views/LoginView.vue";
@@ -10,14 +10,10 @@ import EditArticleAView from "../views/EditArticleView.vue";
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
-    // {
-    //   path: "/",
-    //   name: "home",
-    //   component: HomeView,
-    // },
     {
       path: "/",
-      redirect: "/articles/all"
+      name: "home",
+      component: HomeView,
     },
     {
       path: "/articles/:tag",
