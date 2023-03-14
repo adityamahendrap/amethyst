@@ -4,99 +4,69 @@ import Footer from "../components/Footer.vue";
 </script>
 
 <template>
-  <!-- <section> -->
+  <section>
     <Navbar />
-    <Footer />
-
-    <!-- <div class="center">
-      <div class="image"></div>
-      <h2>Aditya Mahendra</h2>
-      <p>Owner</p>
-    </div>
-  </section> -->
-
-  <!-- <section>
-    <h1>Popular Article</h1>
-    <div class="container">
-      <div class="card">
-        <h3>judul</h3>
-        <p class="date">JAN, 22, 2022</p>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti quibusdam ex sunt!</p>
-        <button>Read Article</button>
+    <div class="container hero-section ">
+      <div class="text ">
+        <h1>Hello there 👋</h1>
+        <p>
+          Welcome to my little corner of the internet. I'm so exited to have you
+          here. This website is where ishare my thoughts, ideas, experiences on
+          a variety of topics that interest me.
+        </p>
       </div>
-      <div class="card">
-        <h3>judul</h3>
-        <p class="date">JAN, 22, 2022</p>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti quibusdam ex sunt!</p>
-        <button>Read Article</button>
+      <div class="hero-image">
+        <img src="../assets/test2.png" />
       </div>
     </div>
-  </section> -->
+  </section>
+
+  <Footer />
 </template>
 
 <style scoped>
-  section {
-    height: 100vh;
-    text-align: center;
-  }
-  .center {
-    position: absolute;
-    top: 50%;
-    right: 50%;
-    transform: translate(50%, -50%);
-    text-align: center;
-  }
+section {
+  overflow: hidden;
+  margin-bottom: 3rem;
+}
 
-  .image {
-    width: 15rem;
-    height: 15rem;
-    background-color: #222222;
-    border-radius: 100%;
-    margin-bottom: 1rem;
-  }
+.hero-section {
+  display: flex;
+  align-items: center;
+}
 
+img {
+  width: 35rem;
+}
 
-  section:nth-child(2) {
-    height: 100vh;
-    display: flex;
+.hero-section .text {
+  color: white;
+  padding: 0 2rem;
+}
+
+h1 {
+  font-weight: bold;
+}
+
+@media (max-width:991px) {
+  .hero-section {
     flex-direction: column;
-    justify-content: center;
   }
-
-  h1 {
-    margin-top: -6rem;
-    margin-bottom: 2rem;
-  }
-
-  .container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 2rem;
-    margin: 0 2rem;
-  }
-
-  .card {
-    background-color: #222222;
-    text-align: start;
-    width: 20rem;
-    padding: 1rem;
-  }
-
-  .card > * {
-    color: white;
-  }
-
-  .date {
-    margin-bottom: 1.5rem;
-  }
-
-  .card button {
+  .hero-image {
     margin-top: 2rem;
-    color: #222222;
-    background-color: white;
-    border: none;
-    cursor: pointer;
-    padding: 0.5rem 1rem;
   }
+}
+@media (max-width:588px) {
+  img {
+    width: 25rem;
+  }
+}
+@media (max-width:431px) {
+  img {
+    width: 17rem;
+  }
+}
+
+
+
 </style>

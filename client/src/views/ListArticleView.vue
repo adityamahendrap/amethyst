@@ -19,8 +19,6 @@ const checkTitle = (t) => {
   return matchedsubString;
 };
 
-const totalMatchedWhenSearch = ref([]);
-
 const convertTime = (unix) => new Date(unix).toLocaleDateString("en-US");
 
 const getAllData = async () => {
@@ -90,14 +88,13 @@ onMounted(() => {
 
 <template>
   
-  <Navbar />
   <section>
+    <Navbar />
     <div class="container">
       <div class="box animate">
         <div class="hero-text">
           <img src="../assets/line.png" alt="">
           <h1>{{ search == '' ? 'Some Article' : `Article with "${search}"` }}</h1>
-          <h1>{{totalMatchedWhenSearch}}</h1>
         </div>
         <input class="search" type="text" placeholder="Search for a thing..." v-model="search"/>
       </div>
@@ -118,13 +115,11 @@ onMounted(() => {
         >#{{ tag.toUpperCase() }}</router-link>
       </div>
 
-      
-      <h1>Not Found</h1>
       <div class="wrapper" v-if="route.params.tag == 'all'">
         <template v-for="data in datas" :key="data.id">
           <div class="card" v-if="checkTitle(data.title)">
             <div class="image" @click="router.push(`/article/${data.id}`)">
-              <img src="" alt="">
+              <img width="320" src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80" alt="">
             </div>
             <div class="text">
               <div>
@@ -137,11 +132,11 @@ onMounted(() => {
           </div>
         </template>
       </div>
-      <!-- <div class="wrapper" v-if="route.params.tag != 'all'">
+      <div class="wrapper" v-if="route.params.tag != 'all'">
         <template v-for="data in datas" :key="data.id">
           <div class="card" v-if="data.tag == `${route.params.tag}` && checkTitle(data.title)">
             <div class="image" @click="router.push(`/article/${data.id}`)">
-              <img src="" alt="">
+              <img width="320" src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80" alt="">
             </div>
             <div class="text">
               <div>
@@ -153,7 +148,7 @@ onMounted(() => {
             </div>
           </div>
         </template>
-      </div> -->
+      </div>
     </div>
   </section>
   <Footer/>
@@ -162,6 +157,7 @@ onMounted(() => {
 <style scoped>
 section {
   background-color: #1F1F23;
+  min-height: 100vh;
 }
 
 h1 {
@@ -187,16 +183,13 @@ h1 {
   position: relative;
 }
 
-
-
-
 input {
   all: unset;
   padding: 0.2rem 0.5rem;
   border-radius: 0.3rem;
   background-color: white;
   color: black;
-  width: 25rem;
+  width: 35%;
   position: absolute;
   bottom: 0;
   transform: translate(0, 50%);
@@ -205,8 +198,17 @@ input {
   text-align: left;
   font-size: 1rem;
   padding: 1rem 1.5rem;
+  border: 3px solid transparent;
 }
 
+input:hover {
+  border: 3px solid #535356;
+}
+
+input:focus {
+  border: 3px solid #a56dfa;
+  background-color: #1F1F23;
+}
 
 .hero-text {
   position: relative;
@@ -226,11 +228,12 @@ input {
 
 .sort {
   display: flex;
-  margin: 1rem;
-  margin-top: 4rem;
-  margin-bottom: 1rem;
-  width: max-content;
+  width: 100%;
   flex-wrap: wrap;
+  justify-content: center;
+  margin: 1rem;
+  margin-top: 5rem;
+  margin-bottom: 1rem;
 }  
 
 .sort button:hover {
@@ -238,6 +241,10 @@ input {
 }
 
 .tag-list {
+  display: flex;
+  width: 100%;
+  flex-wrap: wrap;
+  justify-content: center;
   padding-bottom: 0.5rem;
 }
 
@@ -270,7 +277,7 @@ input {
   gap: 2rem;
   margin: auto;
   margin-top: 3rem;
-  margin-bottom: 4rem;
+  margin-bottom: 3rem;
 }
 
 .card {
@@ -284,10 +291,10 @@ input {
 }
 
 .card .image {
-  width: 100%;
   background-color: blueviolet;
   border-radius: 1rem;
   aspect-ratio: 16/9;
+  overflow: hidden;
 }
 
 .card .image:hover {
@@ -326,10 +333,6 @@ h3:hover {
 
 .date {
   margin-bottom: 1.5rem;
-}
-
-.desc {
-  margin-bottom: 1rem;
 }
 
 .btn {
@@ -371,4 +374,21 @@ h3:hover {
   50%{background-position:7% 100%}
   100%{background-position:94% 0%}
 } 
+
+@media (max-width:1193px) {
+  input {
+    width: 20rem;
+  }
+  
+}
+
+@media (max-width:765px) {
+  .sort {
+    display: none;
+  }
+  .tag-list {
+    margin-top: 5rem;
+  } 
+}
+
 </style>
