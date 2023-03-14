@@ -98,7 +98,6 @@ onMounted(() => {
     <Navbar />
     <div class="container">
 
-
       <div class="box animate">
         <div class="hero-text">
           <img src="../assets/line.png" alt="">
@@ -141,6 +140,7 @@ onMounted(() => {
           </div>
         </template>
       </div>
+      
       <div class="wrapper" v-if="route.params.tag != 'all'">
         <template v-for="data in datas" :key="data.id">
           <div class="card" v-if="data.tag == `${route.params.tag}` && checkTitle(data.title)">

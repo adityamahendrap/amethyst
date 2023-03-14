@@ -78,14 +78,4 @@ const userController = {
   },
 };
 
-// {
-//   "id": 1,
-//   "title": "",
-//   "tag": "",
-//   "description": "",
-//   "paragraph": "",
-//   "createdAt": 1,
-//   "lastUpdated": null
-//  }
-
 module.exports = userController;
