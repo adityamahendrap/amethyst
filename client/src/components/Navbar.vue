@@ -1,7 +1,8 @@
 <script setup>
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 
 const route = useRoute();
+const router = useRouter();
 </script>
 
 <template>
@@ -9,7 +10,7 @@ const route = useRoute();
     <div class="container">
       <kinesis-container>
         <kinesis-element :strength="20" transformOrigin="50% 300%" type="depth">
-          <div class="logo">AMETHYST</div>
+          <div @click="router.push({name: 'home'})" class="logo">AMETHYST</div>
         </kinesis-element>
       </kinesis-container>
 
@@ -58,6 +59,7 @@ nav {
   font-family: "Krona One", sans-serif;
   color: white;
   font-size: 28px;
+  cursor: pointer;
 }
 
 .active {
