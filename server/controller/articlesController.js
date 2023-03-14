@@ -19,10 +19,10 @@ const userController = {
     });
   },
   postData: (req, resp) => {
-    const { title, tag, description, paragraph, createdAt, lastUpdated } =
+    const { title, tag, image, description, paragraph, createdAt, lastUpdated } =
       req.body;
     const unixTimestamp = Date.now();
-    const sql = `INSERT INTO articles VALUES (NULL,'${title}','${tag}','${description}','${paragraph}','${unixTimestamp}', NULL)`;
+    const sql = `INSERT INTO articles VALUES (NULL,'${title}','${tag}', '${image}','${description}','${paragraph}','${unixTimestamp}', NULL)`;
 
     db.query(sql, (err, res) => {
       if (err) throw err;
@@ -36,10 +36,10 @@ const userController = {
     });
   },
   updateData: (req, resp) => {
-    const { title, tag, description, paragraph, createdAt, lastUpdated } =
+    const { title, tag, image, description, paragraph, createdAt, lastUpdated } =
       req.body;
     const unixTimestamp = Date.now();
-    const sql = `UPDATE articles SET id=${req.params.id}, title='${title}', tag='${tag}', description='${description}', paragraph= '${paragraph}', lastUpdated='${unixTimestamp}' WHERE id = ${req.params.id}`;
+    const sql = `UPDATE articles SET id=${req.params.id}, title='${title}', tag='${tag}', image='${image}', description='${description}', paragraph= '${paragraph}', lastUpdated='${unixTimestamp}' WHERE id = ${req.params.id}`;
 
     db.query(sql, (err, res) => {
       if (err) throw err;

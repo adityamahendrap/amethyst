@@ -6,6 +6,7 @@ import { useRouter } from "vue-router";
 const router = useRouter();
 const title = ref("");
 const tag = ref("");
+const imageUrl = ref("");
 const description = ref("");
 const paragraph = ref("");
 
@@ -17,6 +18,7 @@ const addData = async () => {
     lastUpdated: null,
     description: description.value,
     paragraph: paragraph.value,
+    image: imageUrl.value
   });
 
   if (result.status == 201) {
@@ -37,6 +39,8 @@ const addData = async () => {
     <input type="text" v-model="tag" />
     <label>Deskripsi</label>
     <input type="text" v-model="description" />
+    <label>Image url</label>
+    <textarea cols="30" rows="5" v-model="imageUrl"></textarea>
     <label>Isi</label>
     <textarea cols="30" rows="5" v-model="paragraph"></textarea>
     <button @click.prevent="addData">Add</button>

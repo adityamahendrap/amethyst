@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, ref } from "vue";
+import { onMounted, ref, watch } from "vue";
 import axios from "axios";
 import Navbar from "../components/Navbar.vue";
 import Footer from "../components/Footer.vue";
@@ -81,6 +81,12 @@ const sortDataByDateOldToNew = () => {
   });
 }
 
+const limitCharacters = () => {
+  if(search.value.length > 10) {
+    return;
+  }
+}
+
 onMounted(() => {
   getAllData();
 });
@@ -96,7 +102,7 @@ onMounted(() => {
           <img src="../assets/line.png" alt="">
           <h1>{{ search == '' ? 'Some Article' : `Article with "${search}"` }}</h1>
         </div>
-        <input class="search" type="text" placeholder="Search for a thing..." v-model="search"/>
+        <input class="search" type="text" placeholder="Search for a thing..." maxlength="10" v-model="search"/>
       </div>
       <div class="sort">
         <button :class="sortStatus == 1 ? 'tagActive' : ''" class="tag" @click.prevent="sortStatus = 1, sortDataByNameAZ()">A to Z</button>
@@ -119,7 +125,7 @@ onMounted(() => {
         <template v-for="data in datas" :key="data.id">
           <div class="card" v-if="checkTitle(data.title)">
             <div class="image" @click="router.push(`/article/${data.id}`)">
-              <img width="320" src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80" alt="">
+              <img width="320" :src="data.image" alt="">
             </div>
             <div class="text">
               <div>
@@ -136,7 +142,7 @@ onMounted(() => {
         <template v-for="data in datas" :key="data.id">
           <div class="card" v-if="data.tag == `${route.params.tag}` && checkTitle(data.title)">
             <div class="image" @click="router.push(`/article/${data.id}`)">
-              <img width="320" src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80" alt="">
+              <img width="320" :src="data.image" alt="">
             </div>
             <div class="text">
               <div>
@@ -348,7 +354,6 @@ h3:hover {
 .btn:hover {
   color: #a56dfa;
 }
-
 
 .animate {
   background: linear-gradient(38deg, #7d41e1, #71579d, #b793f2, #601da5);

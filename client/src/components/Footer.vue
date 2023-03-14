@@ -2,7 +2,7 @@
 
 <template>
   <footer>
-    Aditya Mahendra &copy; 2023
+    AMETHYST &copy; 2023
   </footer>
 </template>
 
@@ -12,6 +12,5 @@
     color: white;
     text-align: center;
     padding: 1.5rem;
-
   }
 </style>

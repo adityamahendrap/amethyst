@@ -9,6 +9,7 @@ const router = useRouter();
 const data = ref();
 const title = ref();
 const tag = ref();
+const imageUrl = ref();
 const description = ref();
 const paragraph = ref();
 
@@ -20,6 +21,7 @@ const getData = async () => {
   data.value = result.data.payload.datas;
   title.value = _data.title;
   tag.value = _data.tag;
+  imageUrl.value = _data.image;
   description.value = _data.description;
   paragraph.value = _data.paragraph;
 };
@@ -30,6 +32,7 @@ const updateData = async () => {
     {
       title: title.value,
       tag: tag.value,
+      image: imageUrl.value,
       createdAt: data.value.createdAt,
       lastUpdated: Date.now(),
       description: description.value,
@@ -59,6 +62,8 @@ onMounted(() => {
     <label>Deskripsi</label>
     <input type="text" v-model="description" />
     <span>
+      <label>Image url</label>
+      <textarea cols="30" rows="5" v-model="imageUrl"></textarea>
       <label>Isi</label>
       <textarea cols="30" rows="5" v-model="paragraph"></textarea>
     </span>

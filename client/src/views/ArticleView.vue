@@ -41,7 +41,9 @@ onMounted(() => {
       <h6 class="tag" @click="router.push(`/articles/${e.tag}`)">#{{ e.tag.toUpperCase() }}</h6>
     </div>
     <div class="author">Aditya Mahendra</div>
-    <div class="hero"></div>
+    <div class="hero">
+      <img :src="e.image" alt="">
+    </div>
     <section>
       <h2 class="desc">{{ e.description }}</h2>
       <br />
@@ -146,6 +148,7 @@ h1 {
   text-align: center;
   aspect-ratio: 16/7;
   border-radius: 1rem;
+  overflow: hidden;
 }
 
 h2 {
