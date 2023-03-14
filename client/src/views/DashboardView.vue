@@ -1,5 +1,4 @@
 <script setup>
-import Navboard from "../components/Navboard.vue";
 import axios from "axios";
 import { onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
@@ -41,8 +40,6 @@ onMounted(() => {
 <template>
   <h1>Dashboard</h1>
   
-  <router-link to="/add">Add Article</router-link>
-  
   <table class="table">
     <thead class="table-light">
       <tr>
@@ -81,7 +78,13 @@ onMounted(() => {
       </tr>
     </tbody>
   </table>
-  <Navboard />
+  
+  <nav>  
+    <router-link to="/add">Add Article</router-link>
+    <router-link to="/">Go to Home</router-link>
+  </nav>
+  
+
 
   <!-- Modal -->
   <div
@@ -111,9 +114,26 @@ onMounted(() => {
 </template>
 
 <style scoped>
+
+h1 {
+  color: white;
+  padding: 3rem;
+}
+
+p {
+  color: black;
+}
 table {
   width: 80%;
   margin: auto;
   text-align: center;
+}
+
+nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3rem;
+  margin-top: 3rem;
 }
 </style>

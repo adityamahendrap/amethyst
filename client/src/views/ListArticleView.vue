@@ -97,6 +97,8 @@ onMounted(() => {
   <section>
     <Navbar />
     <div class="container">
+
+
       <div class="box animate">
         <div class="hero-text">
           <img src="../assets/line.png" alt="">
@@ -104,6 +106,7 @@ onMounted(() => {
         </div>
         <input class="search" type="text" placeholder="Search for a thing..." maxlength="10" v-model="search"/>
       </div>
+
       <div class="sort">
         <button :class="sortStatus == 1 ? 'tagActive' : ''" class="tag" @click.prevent="sortStatus = 1, sortDataByNameAZ()">A to Z</button>
         <button :class="sortStatus == 2 ? 'tagActive' : ''" class="tag" @click.prevent="sortStatus = 2, sortDataByNameZA()">Z to A</button>

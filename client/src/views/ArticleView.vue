@@ -41,9 +41,13 @@ onMounted(() => {
       <h6 class="tag" @click="router.push(`/articles/${e.tag}`)">#{{ e.tag.toUpperCase() }}</h6>
     </div>
     <div class="author">Aditya Mahendra</div>
-    <div class="hero">
-      <img :src="e.image" alt="">
-    </div>
+    <kinesis-container>
+      <kinesis-element :strength="20">
+        <div class="hero">
+          <img :src="e.image" alt="">
+        </div>
+      </kinesis-element>
+    </kinesis-container>
     <section>
       <h2 class="desc">{{ e.description }}</h2>
       <br />

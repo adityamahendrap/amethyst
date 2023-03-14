@@ -17,7 +17,7 @@ const getData = async () => {
   const result = await axios.get(
     `http://localhost:5000/articles/${route.params.id}`
   );
-  const _data = result.data.payload.datas[0]
+  const _data = result.data.payload.datas[0];
   data.value = result.data.payload.datas;
   title.value = _data.title;
   tag.value = _data.tag;
@@ -52,31 +52,49 @@ onMounted(() => {
 </script>
 
 <template>
-  <h1>Edit</h1>
-  <router-link to="/dashboard">Back</router-link>
   <section>
+    <h1>Edit</h1>
+    <router-link class="red" to="/dashboard">Back</router-link>
     <label>Judul</label>
     <input type="text" v-model="title" />
     <label>Tag</label>
     <input type="text" v-model="tag" />
     <label>Deskripsi</label>
     <input type="text" v-model="description" />
-    <span>
-      <label>Image url</label>
-      <textarea cols="30" rows="5" v-model="imageUrl"></textarea>
-      <label>Isi</label>
-      <textarea cols="30" rows="5" v-model="paragraph"></textarea>
-    </span>
+    <label>Image url</label>
+    <textarea cols="30" rows="5" v-model="imageUrl"></textarea>
+    <label>Isi</label>
+    <textarea cols="30" rows="5" v-model="paragraph"></textarea>
     <button @click.prevent="updateData">Save</button>
   </section>
 </template>
 
 <style scoped>
-section,
-section span {
-  margin: 1rem;
+
+.red {
+  color: red;
+}
+h1 {
+  color: white;
+  margin: auto;
+  padding: 3rem;
+}
+
+label {
+  color: white;
+  margin-top: 1rem;
+}
+section {
   display: flex;
   flex-direction: column;
-  width: 20rem;
+  width: 50%;
+  margin: auto;
+}
+button {
+  margin: auto;
+  margin-top: 3rem;
+  padding: 0.5rem 3rem;
+  margin-bottom: 3rem;
+  width: max-content;
 }
 </style>

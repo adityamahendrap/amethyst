@@ -30,9 +30,9 @@ const addData = async () => {
 </script>
 
 <template>
-  <h1>Add</h1>
-  <router-link to="/dashboard">Back</router-link>
   <section>
+    <h1>Add</h1>
+    <router-link class="red" to="/dashboard">Back</router-link>
     <label>Judul</label>
     <input type="text" v-model="title" />
     <label>Tag</label>
@@ -48,10 +48,30 @@ const addData = async () => {
 </template>
 
 <style scoped>
+.red {
+  color: red;
+}
+h1 {
+  color: white;
+  margin: auto;
+  padding: 3rem;
+}
+
+label {
+  color: white;
+  margin-top: 1rem;
+}
 section {
-  margin: 1rem;
   display: flex;
   flex-direction: column;
-  width: 20rem;
+  width: 50%;
+  margin: auto;
+}
+button {
+  margin: auto;
+  margin-top: 3rem;
+  padding: 0.5rem 3rem;
+  margin-bottom: 3rem;
+  width: max-content;
 }
 </style>

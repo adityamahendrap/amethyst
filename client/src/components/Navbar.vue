@@ -1,25 +1,37 @@
 <script setup>
-  import {useRoute} from 'vue-router';
-  
-  const route = useRoute()
+import { useRoute } from "vue-router";
+
+const route = useRoute();
 </script>
 
 <template>
   <nav>
     <div class="container">
-      <div class="logo">AMETHYST</div>
+      <kinesis-container>
+        <kinesis-element :strength="20" transformOrigin="50% 300%" type="depth">
+          <div class="logo">AMETHYST</div>
+        </kinesis-element>
+      </kinesis-container>
+
       <div class="nav-list">
-        <router-link active-class="active" class="link" to="/">Home</router-link> 
-        <router-link :class="route.fullPath != '/' ? 'active' : ''" active-class="active" class="link" to="/articles/all">Article</router-link> 
+        <router-link active-class="active" class="link" to="/"
+          >Home</router-link
+        >
+        <router-link
+          :class="route.fullPath != '/' ? 'active' : ''"
+          active-class="active"
+          class="link"
+          to="/articles/all"
+          >Article</router-link
+        >
       </div>
     </div>
   </nav>
 </template>
 
 <style scoped>
-@import url('https://fonts.googleapis.com/css2?family=Krona+One&display=swap');
 nav {
-  background-color: #1F1F23;
+  background-color: #1f1f23;
 }
 .container {
   display: flex;
@@ -43,16 +55,15 @@ nav {
 }
 
 .logo {
-  font-family: 'Krona One', sans-serif;
+  font-family: "Krona One", sans-serif;
   color: white;
   font-size: 28px;
 }
 
 .active {
-  color: #7D41E1;
+  color: #7d41e1;
 }
 </style>
-
 
 <!-- 
   .hide{
