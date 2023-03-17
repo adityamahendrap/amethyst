@@ -33,12 +33,12 @@ onMounted(() => {
   <main v-for="e in data" :key="e.id">
     <h5 class="dir">
       <router-link class="link" to="/articles/all">Article</router-link> /
-      {{ e.title.toUpperCase() }}
+      {{ e.title }}
     </h5>
     <div class="date">{{ convertTime(e.createdAt) }}</div>
     <h1>{{ e.title }}</h1>
     <div class="tag-list">
-      <h6 class="tag" @click="router.push(`/articles/${e.tag}`)">#{{ e.tag.toUpperCase() }}</h6>
+      <h6 class="tag" @click="router.push(`/articles/${e.tag}`)">#{{ e.tag }}</h6>
     </div>
     <div class="author">Aditya Mahendra</div>
     <kinesis-container>
@@ -97,7 +97,6 @@ section {
 
 h1 {
   font-size: clamp(50px, 15.4929577465px + 6.9014084507vw, 148px);
-  text-transform: uppercase;
   text-align: center;
   padding: 0 3rem;
   line-height: 0.9;

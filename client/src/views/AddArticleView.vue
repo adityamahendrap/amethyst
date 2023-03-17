@@ -11,21 +11,27 @@ const description = ref("");
 const paragraph = ref("");
 
 const addData = async () => {
-  const result = await axios.post(`http://localhost:5000/articles`, {
-    title: title.value,
-    tag: tag.value,
-    createdAt: Date.now(),
-    lastUpdated: null,
-    description: description.value,
-    paragraph: paragraph.value,
-    image: imageUrl.value
-  });
-
-  if (result.status == 201) {
-    console.log("ok");
-    alert("berhasil ditambahkan");
-    router.push({ name: "dashboard" });
+  try {
+    const result = await axios.post(`http://localhost:5000/articles`, {
+      title: title.value,
+      tag: tag.value,
+      createdAt: Date.now(),
+      lastUpdated: null,
+      description: description.value,
+      paragraph: paragraph.value,
+      image: imageUrl.value
+    });
+    if (result.status == 201) {
+      console.log("ok");
+      alert("berhasil ditambahkan");
+      router.push({ name: "dashboard" });
+    } 
+  } catch(err) {
+    if(err.response.status == 400) alert(err.response.data.payload.messages);
   }
+
+
+  
 };
 </script>
 

@@ -21,7 +21,6 @@ const login = async () => {
     warning.value = '* User not found'
   }
 }
-
 </script>
 
 <template>
@@ -59,6 +58,11 @@ const login = async () => {
 
 * {
   color: #efeff1;
+}
+
+button {
+  all:unset;
+  text-align: center;
 }
 
 .animate {
@@ -177,7 +181,7 @@ input:focus {
 .pw button {
   padding: 0.2rem 0.5rem;
   border-radius: 0.3rem;
-  background-color: #a56dfa;
+  background-color: #7d41e1;
   border-color: #a56dfa;
   transition: background-color 0.2s;
 }
@@ -186,7 +190,7 @@ button.login {
   margin-top: 1.5rem;
   padding: 0.2rem 0.5rem;
   border-radius: 0.3rem;
-  background-color: #a56dfa;
+  background-color: #7d41e1;
   border-color: #a56dfa;
   transition: background-color 0.2s;
 }

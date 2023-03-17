@@ -27,22 +27,27 @@ const getData = async () => {
 };
 
 const updateData = async () => {
-  const result = await axios.put(
-    `http://localhost:5000/articles/${route.params.id}`,
-    {
-      title: title.value,
-      tag: tag.value,
-      image: imageUrl.value,
-      createdAt: data.value.createdAt,
-      lastUpdated: Date.now(),
-      description: description.value,
-      paragraph: paragraph.value,
-      id: route.params.id,
+  try {
+
+    const result = await axios.put(
+      `http://localhost:5000/articles/${route.params.id}`,
+      {
+        title: title.value,
+        tag: tag.value,
+        image: imageUrl.value,
+        createdAt: data.value.createdAt,
+        lastUpdated: Date.now(),
+        description: description.value,
+        paragraph: paragraph.value,
+        id: route.params.id,
+      }
+    );
+    if (result.status == 201) {
+      alert("update berhasil");
+      router.push({ name: "dashboard" });
     }
-  );
-  if (result.status == 201) {
-    alert("update berhasil");
-    router.push({ name: "dashboard" });
+  } catch(err) {
+    if(err.response.status == 400) alert(err.response.data.payload.messages);
   }
 };
 

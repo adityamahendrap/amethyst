@@ -12,12 +12,15 @@ const allTag = ref([]);
 const search = ref("");
 const sortStatus = ref('1');
 
-const checkTitle = (t) => {
-  const title = t.toLowerCase();
-  const matchedsubString = title.includes(search.value.toLowerCase());
-  
-  return matchedsubString;
-};
+watch(search, (input) => {
+  datas.value.forEach(data => {
+    if(data.title.includes(input.toUpperCase())) {
+      data.isVisible = true;
+    } else {
+      data.isVisible = false
+    }
+  });
+})
 
 const convertTime = (unix) => new Date(unix).toLocaleDateString("en-US");
 
@@ -28,6 +31,7 @@ const getAllData = async () => {
     datas.value = _datas;
     sortDataByNameAZ()
 
+    datas.value = datas.value.map(data => ({...data, isVisible: true}));
     getAndFilterTag(_datas)
   }
 };
@@ -43,8 +47,8 @@ const getAndFilterTag = (resultData) => {
 
 const sortDataByNameAZ = () => {
   datas.value.sort((a, b) => {
-      let A = a.title.toUpperCase(); 
-      let B = b.title.toUpperCase(); 
+      let A = a.title; 
+      let B = b.title;
       if (A < B) {
         return -1;
       }
@@ -57,8 +61,8 @@ const sortDataByNameAZ = () => {
 
 const sortDataByNameZA = () => {
   datas.value.sort((a, b) => {
-      let A = a.title.toUpperCase(); 
-      let B = b.title.toUpperCase(); 
+      let A = a.title;
+      let B = b.title;
       if (A > B) {
         return -1;
       }
@@ -81,12 +85,6 @@ const sortDataByDateOldToNew = () => {
   });
 }
 
-const limitCharacters = () => {
-  if(search.value.length > 10) {
-    return;
-  }
-}
-
 onMounted(() => {
   getAllData();
 });
@@ -100,7 +98,7 @@ onMounted(() => {
 
       <div class="box animate">
         <div class="hero-text">
-          <img src="../assets/line.png" alt="">
+          <img src="../assets/line.png">
           <h1>{{ search == '' ? 'Some Article' : `Article with "${search}"` }}</h1>
         </div>
         <input class="search" type="text" placeholder="Search for a thing..." maxlength="10" v-model="search"/>
@@ -120,21 +118,21 @@ onMounted(() => {
         v-for="(tag, index) in allTag"
         :key="index"
         :to="`/articles/${tag}`"
-        >#{{ tag.toUpperCase() }}</router-link>
+        >#{{ tag }}</router-link>
       </div>
 
       <div class="wrapper" v-if="route.params.tag == 'all'">
         <template v-for="data in datas" :key="data.id">
-          <div class="card" v-if="checkTitle(data.title)">
-            <div class="image" @click="router.push(`/article/${data.id}`)">
-              <img width="320" :src="data.image" alt="">
-            </div>
-            <div class="text">
-              <div>
-                <span class="me-3 tag-in-card" @click="router.push(`/articles/${data.tag}`)">#{{ data.tag.toUpperCase() }}</span>
+            <div class="card" v-if="data.isVisible">
+              <div class="image" @click="router.push(`/article/${data.id}`)">
+                <img width="320" :src="data.image" alt="">
+              </div>
+              <div class="text">
+                <div>
+                <span class="me-3 tag-in-card" @click="router.push(`/articles/${data.tag}`)">#{{ data.tag }}</span>
                 <span class="date">{{ convertTime(data.createdAt) }}</span>
               </div>
-              <h3 @click="router.push(`/article/${data.id}`)">{{ data.title.toUpperCase() }}</h3>
+              <h3 @click="router.push(`/article/${data.id}`)">{{ data.title }}</h3>
               <p class="desc">{{ data.description }}</p>
             </div>
           </div>
@@ -143,16 +141,16 @@ onMounted(() => {
       
       <div class="wrapper" v-if="route.params.tag != 'all'">
         <template v-for="data in datas" :key="data.id">
-          <div class="card" v-if="data.tag == `${route.params.tag}` && checkTitle(data.title)">
+          <div class="card" v-if="data.tag == `${route.params.tag}` && data.isVisible">
             <div class="image" @click="router.push(`/article/${data.id}`)">
               <img width="320" :src="data.image" alt="">
             </div>
             <div class="text">
               <div>
-                <span class="me-3 tag-in-card" @click="router.push(`/articles/${data.tag}`)">#{{ data.tag.toUpperCase() }}</span>
+                <span class="me-3 tag-in-card" @click="router.push(`/articles/${data.tag}`)">#{{ data.tag }}</span>
                 <span class="date">{{ convertTime(data.createdAt) }}</span>
               </div>
-              <h3 @click="router.push(`/article/${data.id}`)">{{ data.title.toUpperCase() }}</h3>
+              <h3 @click="router.push(`/article/${data.id}`)">{{ data.title }}</h3>
               <p class="desc">{{ data.description }}</p>
             </div>
           </div>
