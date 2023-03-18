@@ -8,7 +8,7 @@ const userController = {
     
     db.query(sql, (err, res) => {
       if (err) throw err;
-      response(200, res, "GET all data", resp);
+      response(200, res, "sucess, get all data", resp);
     });
   },
   getDataById: (req, resp) => {
@@ -17,7 +17,7 @@ const userController = {
     db.query(sql, (err, res) => {
       if (err) throw err;
       if(res.length == 0) return response(404, res, "Article not found", resp);
-      response(200, res, "GET data by id", resp);
+      response(200, res, "sucess, get data by id", resp);
     });
   },
   postData: (req, resp) => {
@@ -37,7 +37,7 @@ const userController = {
             isSuccess: res.affectedRows,
             id: res.insertId,
           };
-          response(201, data, "POST article", resp);
+          response(201, data, "sucess, post an article", resp);
         }
       });
     } catch(err) {
@@ -62,9 +62,9 @@ const userController = {
             isUpdated: res.affectedRows,
             message: res.message,
           };
-          return response(201, data, "PUT article", resp);
+          return response(201, data, "sucess, update an article", resp);
         } 
-        response(404, { isUpdated: res.affectedRows }, "not found, cannot PUT article", resp);
+        response(404, { isUpdated: res.affectedRows }, "not found, cannot update an article", resp);
       });
     } catch(err) {
       console.log(err);
@@ -77,9 +77,9 @@ const userController = {
     db.query(sql, (err, res) => {
       if (err) throw err;
       if (res.affectedRows) {
-        return response(201, { isDeleted: res.affectedRows }, "DELETE article", resp);
+        return response(201, { isDeleted: res.affectedRows }, "sucess delete an article", resp);
       } 
-      response(404, { isDeleted: res.affectedRows }, "not found, cannot DELETE article", resp);
+      response(404, { isDeleted: res.affectedRows }, "not found, cannot delete an article", resp);
     });
   },
 };
