@@ -4,6 +4,8 @@ const bodyParser = require("body-parser");
 const response = require("./response.js");
 const articlesController = require("./controller/articlesController.js");
 const adminContoller = require("./controller/adminContoller.js");
+require('dotenv').config();
+const port = process.env.PORT || 5000;
 
 const app = express();
 
@@ -27,6 +29,6 @@ app.route("/articles/:id")
   .put(articlesController.updateData)
   .delete(articlesController.deleteData)
 
-app.listen(5000, () => {
-  console.log(`server running on port 5000`);
+app.listen(port, () => {
+  console.log('Server running on port', port);
 });
