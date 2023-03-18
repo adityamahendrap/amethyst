@@ -84,8 +84,6 @@ onMounted(() => {
     <router-link to="/">Go to Home</router-link>
   </nav>
   
-
-
   <!-- Modal -->
   <div
     class="modal fade"
@@ -106,7 +104,7 @@ onMounted(() => {
           ></button>
         </div>
         <div class="modal-body">
-            <p>{{paragraphs}}</p>
+            <p v-html="paragraphs"></p>
         </div>
       </div>
     </div>
@@ -118,6 +116,11 @@ onMounted(() => {
 h1 {
   color: white;
   padding: 3rem;
+}
+
+.modal-title {
+  padding: 0 0.5rem;
+  color: black;
 }
 
 p {

@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, ref, watch } from "vue";
+import { onMounted, ref, watch, computed } from "vue";
 import axios from "axios";
 import Navbar from "../components/Navbar.vue";
 import Footer from "../components/Footer.vue";
@@ -11,6 +11,7 @@ const datas = ref();
 const allTag = ref([]);
 const search = ref("");
 const sortStatus = ref('1');
+const countVisible = ref(!0)
 
 watch(search, (input) => {
   datas.value.forEach(data => {
@@ -20,6 +21,8 @@ watch(search, (input) => {
       data.isVisible = false
     }
   });
+
+  countVisible.value = datas.value.reduce((acc, data) => data.isVisible ? acc + 1 : acc, 0);
 })
 
 const convertTime = (unix) => new Date(unix).toLocaleDateString("en-US");
@@ -95,7 +98,6 @@ onMounted(() => {
   <section>
     <Navbar />
     <div class="container">
-
       <div class="box animate">
         <div class="hero-text">
           <img src="../assets/line.png">
@@ -121,7 +123,9 @@ onMounted(() => {
         >#{{ tag }}</router-link>
       </div>
 
+      
       <div class="wrapper" v-if="route.params.tag == 'all'">
+        <h1 v-if="countVisible == 0">Article does'nt exist</h1>
         <template v-for="data in datas" :key="data.id">
             <div class="card" v-if="data.isVisible">
               <div class="image" @click="router.push(`/article/${data.id}`)">
@@ -140,6 +144,7 @@ onMounted(() => {
       </div>
       
       <div class="wrapper" v-if="route.params.tag != 'all'">
+        <h1 v-if="countVisible == 0">Article does'nt exist</h1>
         <template v-for="data in datas" :key="data.id">
           <div class="card" v-if="data.tag == `${route.params.tag}` && data.isVisible">
             <div class="image" @click="router.push(`/article/${data.id}`)">

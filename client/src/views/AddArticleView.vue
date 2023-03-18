@@ -2,6 +2,8 @@
 import { ref } from "vue";
 import axios from "axios";
 import { useRouter } from "vue-router";
+import { QuillEditor } from '@vueup/vue-quill'
+import '@vueup/vue-quill/dist/vue-quill.snow.css';
 
 const router = useRouter();
 const title = ref("");
@@ -29,9 +31,6 @@ const addData = async () => {
   } catch(err) {
     if(err.response.status == 400) alert(err.response.data.payload.messages);
   }
-
-
-  
 };
 </script>
 
@@ -46,9 +45,12 @@ const addData = async () => {
     <label>Deskripsi</label>
     <input type="text" v-model="description" />
     <label>Image url</label>
-    <textarea cols="30" rows="5" v-model="imageUrl"></textarea>
+    <input type="text" v-model="imageUrl" />
     <label>Isi</label>
-    <textarea cols="30" rows="5" v-model="paragraph"></textarea>
+    <p class="test">{{ paragraph }}</p>
+    <div class="editor">
+      <QuillEditor theme="snow" v-model:content="paragraph" toolbar="full" content-type="html"/>
+    </div>
     <button @click.prevent="addData">Add</button>
   </section>
 </template>
@@ -57,6 +59,7 @@ const addData = async () => {
 .red {
   color: red;
 }
+
 h1 {
   color: white;
   margin: auto;
@@ -79,5 +82,9 @@ button {
   padding: 0.5rem 3rem;
   margin-bottom: 3rem;
   width: max-content;
+}
+.editor {
+  background-color: white;
+  color: black;
 }
 </style>

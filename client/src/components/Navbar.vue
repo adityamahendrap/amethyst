@@ -9,7 +9,7 @@ const router = useRouter();
   <nav>
     <div class="container">
       <kinesis-container>
-        <kinesis-element :strength="20" transformOrigin="50% 300%" type="depth">
+        <kinesis-element :strength="7" transformOrigin="50% 300%" type="depth">
           <div @click="router.push({name: 'home'})" class="logo">AMETHYST</div>
         </kinesis-element>
       </kinesis-container>
@@ -52,7 +52,7 @@ nav {
   text-decoration: none;
 }
 .link:hover {
-  filter: brightness(150%);
+  opacity: 0.8;
 }
 
 .logo {

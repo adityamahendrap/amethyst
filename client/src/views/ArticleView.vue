@@ -51,7 +51,8 @@ onMounted(() => {
     <section>
       <h2 class="desc">{{ e.description }}</h2>
       <br />
-      <p>{{ paragraphs }}</p>
+      
+      <p v-html="paragraphs"></p>
     </section>
   </main>
   <!-- <ContactSection /> -->
@@ -154,6 +155,10 @@ h1 {
   overflow: hidden;
 }
 
+.hero image {
+  padding: 4rem;
+}
+
 h2 {
   font-size: clamp(24px, 14.8450704225px + 1.8309859155vw, 50px);
   color: #a56dfa;
@@ -168,6 +173,8 @@ p {
   margin-block-end: 1em;
   font-size: clamp(16px, 13.1830985915px + 0.5633802817vw, 24px);
 }
+
+
 
 .second-line {
   margin-top: 3rem;
