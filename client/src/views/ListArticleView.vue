@@ -10,7 +10,7 @@ const router = useRouter();
 const datas = ref();
 const allTag = ref([]);
 const search = ref("");
-const sortStatus = ref('1');
+const sortStatus = ref('AZ');
 const countVisible = ref(!0)
 
 watch(search, (input) => {
@@ -29,14 +29,12 @@ const convertTime = (unix) => new Date(unix).toLocaleDateString("en-US");
 
 const getAllData = async () => {
   const result = await axios.get(`http://localhost:5000/articles`);
-  if (result.status == 200) {
-    const _datas = result.data.payload.datas
-    datas.value = _datas;
-    sortDataByNameAZ()
+  const { datas: datasApi } = result.data.payload
+  datas.value = datasApi;
+  sortDataByNameAZ()
 
-    datas.value = datas.value.map(data => ({...data, isVisible: true}));
-    getAndFilterTag(_datas)
-  }
+  datas.value = datas.value.map(data => ({...data, isVisible: true}));
+  getAndFilterTag(datasApi)
 };
 
 const getAndFilterTag = (resultData) => {
@@ -107,10 +105,10 @@ onMounted(() => {
       </div>
 
       <div class="sort">
-        <button :class="sortStatus == 1 ? 'tagActive' : ''" class="tag" @click.prevent="sortStatus = 1, sortDataByNameAZ()">A to Z</button>
-        <button :class="sortStatus == 2 ? 'tagActive' : ''" class="tag" @click.prevent="sortStatus = 2, sortDataByNameZA()">Z to A</button>
-        <button :class="sortStatus == 3 ? 'tagActive' : ''" class="tag" @click.prevent="sortStatus = 3, sortDataByDateNewToOld()">Newest to Oldest</button>
-        <button :class="sortStatus == 4 ? 'tagActive' : ''" class="tag" @click.prevent="sortStatus = 4, sortDataByDateOldToNew()">Oldest to Newest</button>
+        <button :class="sortStatus == 'AZ' ? 'tagActive' : ''" class="tag" @click.prevent="sortStatus = 'AZ', sortDataByNameAZ()">A to Z</button>
+        <button :class="sortStatus == 'ZA' ? 'tagActive' : ''" class="tag" @click.prevent="sortStatus = 'ZA', sortDataByNameZA()">Z to A</button>
+        <button :class="sortStatus == 'newestOldest' ? 'tagActive' : ''" class="tag" @click.prevent="sortStatus = 'newestOldest', sortDataByDateNewToOld()">Newest to Oldest</button>
+        <button :class="sortStatus == 'oldestNewest' ? 'tagActive' : ''" class="tag" @click.prevent="sortStatus = 'oldestNewest', sortDataByDateOldToNew()">Oldest to Newest</button>
       </div>
       <div class="tag-list">
         <router-link active-class="tagActive" class="tag" to="/articles/all">All</router-link>

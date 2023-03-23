@@ -1,7 +1,10 @@
 <script setup>
 import Navbar from "../components/Navbar.vue";
 import Footer from "../components/Footer.vue";
-// import { KinesisContainer } from 'vue-kinesis'
+import ContactSection from '../components/ContactSection.vue';
+import NewestArticleSection from '../components/NewestArticleSection.vue';
+
+
 </script>
 
 <template>
@@ -19,13 +22,20 @@ import Footer from "../components/Footer.vue";
         </div>
         <kinesis-element :strength="20">
         <div class="hero-image">
-            <img src="../assets/test2.png" />
+            <img src="../assets/hero.png" />
           </div>
         </kinesis-element>
       </div>
     </kinesis-container>
   </section>
 
+  <section>
+    <NewestArticleSection/>
+  </section>
+
+  <section>
+    <ContactSection/>
+  </section>
   <Footer />
 </template>
 
@@ -33,6 +43,7 @@ import Footer from "../components/Footer.vue";
 * {
   color: white;
 }
+
 section {
   overflow: hidden;
   margin-bottom: 3rem;
@@ -54,6 +65,11 @@ img {
 
 h1 {
   font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+p {
+  font-size: 1.2rem;
 }
 
 @media (max-width: 991px) {

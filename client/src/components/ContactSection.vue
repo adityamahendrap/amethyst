@@ -2,13 +2,15 @@
 
 <template>
   <section>
-    <h1>Do you have any question, sugestion, or feedback? I'd love to hear from you</h1>
-    <form action="">
-      <input type="text" name="" id="" placeholder="Your Name">
-      <input type="text" name="" id="" placeholder="Your Email">
-      <textarea name="" id="" cols="30" rows="10" placeholder="Your Message"></textarea>
-      <button>Submit</button>
-    </form>
+    <div class="container">
+      <h1>Do you have any question, sugestion, or feedback? I'd love to hear from you</h1>
+      <form action="">
+        <input type="text" name="" id="" placeholder="Your Name">
+        <input type="text" name="" id="" placeholder="Your Email">
+        <textarea name="" id="" cols="30" rows="10" placeholder="Your Message"></textarea>
+        <button @click.prevent="">Submit</button>
+      </form>
+    </div>
   </section>
 </template>
 
@@ -25,6 +27,7 @@
   
   h1 {
     text-align: center; 
+    font-weight: bold;
   }
 
   form {
@@ -33,9 +36,28 @@
     gap: 2rem;
     margin-top: 3rem;
   }
-
+    
   input, textarea {
-    padding: 1rem;
+    all: unset;
+    padding: 0.2rem 0.5rem;
+    border-radius: 0.3rem;
+    background-color: white;
+    color: black;
+    background-color: #3D3D40;
+    color: #B4B4B4;
+    text-align: left;
+    font-size: 1rem;
+    padding: 1rem 1.5rem;
+    border: 3px solid transparent;
+  }
+
+  input:hover, textarea:hover {
+    border: 3px solid #535356;
+  }
+
+  input:focus, textarea:focus {
+    border: 3px solid #a56dfa;
+    background-color: #1F1F23;
   }
 
   button {
@@ -43,7 +65,7 @@
     margin: auto;
     padding: 0.8rem 5rem;
     color: white;
-    background-color: #222222;
+    background-color: #7d41e1;
     border-radius: 0.3rem;
     border: none;
     cursor: pointer;
@@ -53,7 +75,4 @@
     opacity: 0.9;
   }
 
-  @media (max-width: 997px) {
-
-  }
 </style>

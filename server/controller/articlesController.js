@@ -28,7 +28,21 @@ const userController = {
       });
     } catch (error) {
       console.log(error);
-      return response(500, null, "Server error", resp);
+      response(500, null, "Server error", resp);
+    }
+  },
+  getNewestData: (req, resp) => {
+    try {
+      const { length } = req.params
+      const sql = `SELECT * FROM articles ORDER BY createdAt DESC LIMIT ${length}`
+
+      db.query(sql, (err, res) => {
+        if(err) throw err
+        response(200, res, `succes, get ${length} newest data`, resp)
+      })
+    } catch (error) {
+      console.log(error);
+      response(500, null, "Server error", resp);
     }
   },
   postData: (req, resp) => {
