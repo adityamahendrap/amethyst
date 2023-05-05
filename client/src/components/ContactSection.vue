@@ -1,14 +1,38 @@
-<script setup></script>
+<script setup>
+  import { ref } from 'vue';
+  import axios from 'axios';
+  const name = ref('')
+  const email = ref('')
+  const message = ref('')
+
+  const sendComment = async () => {
+    try {
+      const result = await axios.post(`${import.meta.env.VITE_API_ENDPOINT}/comments`, {
+        name: name.value,
+        email: email.value,
+        message: message.value
+      })
+      if(!result) return
+  
+      name.value = ""
+      email.value = ""
+      message.value = ""
+      alert("Comment Submitted")
+    } catch (err) {
+      console.log(err);
+    }
+  }
+</script>
 
 <template>
   <section>
     <div class="container">
       <h1>Do you have any question, sugestion, or feedback? I'd love to hear from you</h1>
-      <form action="">
-        <input type="text" name="" id="" placeholder="Your Name">
-        <input type="text" name="" id="" placeholder="Your Email">
-        <textarea name="" id="" cols="30" rows="10" placeholder="Your Message"></textarea>
-        <button @click.prevent="">Submit</button>
+      <form>
+        <input @keyup.enter="sendComment" v-model="name" type="text" name="" id="" placeholder="Your Name">
+        <input @keyup.enter="sendComment" v-model="email" type="text" name="" id="" placeholder="Your Email">
+        <textarea @keyup.enter="sendComment" v-model="message" name="" id="" cols="30" rows="10" placeholder="Your Message"></textarea>
+        <button @click.prevent="sendComment">Submit</button>
       </form>
     </div>
   </section>
