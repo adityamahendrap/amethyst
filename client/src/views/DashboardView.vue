@@ -7,7 +7,7 @@ const datas = ref();
 const router = useRouter();
 
 const getAllData = async () => {
-  const result = await axios.get(`http://localhost:5000/articles`);
+  const result = await axios.get(`${import.meta.env.VITE_API_ENDPOINT}/articles`);
   const _ = result.data.payload.datas
   if (result.status == 200) {
     datas.value = _;
@@ -15,7 +15,7 @@ const getAllData = async () => {
 };
 
 const deleteData = async (id) => {
-  const result = await axios.delete(`http://localhost:5000/articles/${id}`);
+  const result = await axios.delete(`${import.meta.env.VITE_API_ENDPOINT}/articles/${id}`);
   getAllData();
 };
 

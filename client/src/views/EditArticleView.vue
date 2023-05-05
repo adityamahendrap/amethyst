@@ -17,7 +17,7 @@ const paragraph = ref();
 
 const getData = async () => {
   const result = await axios.get(
-    `http://localhost:5000/articles/${route.params.id}`
+    `${import.meta.env.VITE_API_ENDPOINT}/articles/${route.params.id}`
   );
   const _data = result.data.payload.datas[0];
   data.value = result.data.payload.datas;
@@ -32,7 +32,7 @@ const updateData = async () => {
   try {
 
     const result = await axios.put(
-      `http://localhost:5000/articles/${route.params.id}`,
+      `${import.meta.env.VITE_API_ENDPOINT}/articles/${route.params.id}`,
       {
         title: title.value,
         tag: tag.value,

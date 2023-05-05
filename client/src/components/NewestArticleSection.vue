@@ -9,7 +9,7 @@
   const convertTime = (unix) => new Date(unix).toLocaleDateString("en-US");
 
   const getNewestArticle = async () => {
-    const result = await axios.get(`http://localhost:5000/articles/newest/3`)
+    const result = await axios.get(`${import.meta.env.VITE_API_ENDPOINT}/articles/newest/3`)
     const { datas: datasApi } = result.data.payload;
     datas.value = datasApi
   }
@@ -25,12 +25,12 @@
     <div class="wrapper">
       <template v-for="data in datas" :key="data.id">
         <div class="card">
-          <div class="image" @click="router.push(`/article/${data.id}`)">
+          <div class="image" @click="router.push(`/article/${data.tag}/${data.id}/${data.slug}`)">
             <img width="320" :src="data.image" alt="">
           </div>
           <div class="text">
             <div>
-            <span class="me-3 tag-in-card" @click="router.push(`/articles/${data.tag}`)">#{{ data.tag }}</span>
+            <span class="me-3 tag-in-card" @click="router.push(`/articles/${data.tag}`)">#{{ data.tag.toUpperCase() }}</span>
             <span class="date">{{ convertTime(data.createdAt) }}</span>
           </div>
           <h3 @click="router.push(`/article/${data.id}`)">{{ data.title }}</h3>

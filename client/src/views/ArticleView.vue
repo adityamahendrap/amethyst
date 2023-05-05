@@ -12,7 +12,7 @@ const paragraphs = ref();
 
 const getArticle = async () => {
   const result = await axios.get(
-    `http://localhost:5000/articles/${route.params.id}`
+    `${import.meta.env.VITE_API_ENDPOINT}/articles/${route.params.id}`
   );
   if (result.status == 200) {
     const _data = result.data.payload.datas;
@@ -32,13 +32,14 @@ onMounted(() => {
 <template>
   <main v-for="e in data" :key="e.id">
     <h5 class="dir">
-      <router-link class="link" to="/articles/all">Article</router-link> /
+      <router-link class="link" to="/articles/all">Article</router-link> / 
+      <router-link class="link" :to="`/articles/${data[0].tag}`">{{ data[0].tag.toUpperCase() }}</router-link> /
       {{ e.title }}
     </h5>
     <div class="date">{{ convertTime(e.createdAt) }}</div>
     <h1>{{ e.title }}</h1>
     <div class="tag-list">
-      <h6 class="tag" @click="router.push(`/articles/${e.tag}`)">#{{ e.tag }}</h6>
+      <h6 class="tag" @click="router.push(`/articles/${e.tag}`)">#{{ e.tag.toUpperCase() }}</h6>
     </div>
     <div class="author">Aditya Mahendra</div>
     <kinesis-container>

@@ -11,7 +11,7 @@ const togglePassword = ref('password')
 const warning = ref('')
 
 const login = async () => {
-  const result = await axios.get(`http://localhost:5000/admin?username=${username.value}&password=${password.value}`)
+  const result = await axios.get(`${import.meta.env.VITE_API_ENDPOINT}/admin?username=${username.value}&password=${password.value}`)
   const _datas = result.data.payload.datas
   
   if(result.status == 200 && _datas.length) {

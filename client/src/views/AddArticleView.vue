@@ -14,7 +14,7 @@ const paragraph = ref("");
 
 const addData = async () => {
   try {
-    const result = await axios.post(`http://localhost:5000/articles`, {
+    const result = await axios.post(`${import.meta.env.VITE_API_ENDPOINT}/articles`, {
       title: title.value,
       tag: tag.value,
       createdAt: Date.now(),
