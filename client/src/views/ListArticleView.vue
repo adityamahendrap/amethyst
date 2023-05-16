@@ -92,7 +92,6 @@ onMounted(() => {
 </script>
 
 <template>
-  <!-- {{ process.env.TEST }} -->
   <section>
     <Navbar />
     <div class="container">

@@ -1,6 +1,7 @@
 <script setup>
   import { ref } from 'vue';
   import axios from 'axios';
+  import Button from './Button.vue';
   const name = ref('')
   const email = ref('')
   const message = ref('')
@@ -32,7 +33,7 @@
         <input @keyup.enter="sendComment" v-model="name" type="text" name="" id="" placeholder="Your Name">
         <input @keyup.enter="sendComment" v-model="email" type="text" name="" id="" placeholder="Your Email">
         <textarea @keyup.enter="sendComment" v-model="message" name="" id="" cols="30" rows="10" placeholder="Your Message"></textarea>
-        <button @click.prevent="sendComment">Submit</button>
+        <Button text="Submit" @click.prevent="sendComment"/>
       </form>
     </div>
   </section>

@@ -2,6 +2,7 @@
   import { ref, onMounted } from 'vue';
   import axios from 'axios';
   import { useRouter } from 'vue-router';
+  import Button from './Button.vue';
 
   const router = useRouter()
   const datas = ref()
@@ -39,7 +40,7 @@
       </div>
      </template>
     </div>
-    <button @click="router.push('/articles/all')">More</button>
+    <Button text="More" route="/articles/all"/>
   </section>
 </template>
 
@@ -118,20 +119,5 @@ h3:hover {
 
 .date {
   margin-bottom: 1.5rem;
-}
-
-button {
-  width: max-content;
-  margin: auto;
-  padding: 0.8rem 5rem;
-  color: white;
-  background-color: #7d41e1;
-  border-radius: 0.3rem;
-  border: none;
-  cursor: pointer;
-}
-
-button:hover {
-  opacity: 0.9;
 }
 </style>
